@@ -76,7 +76,6 @@ def execute_job(job):
         id_key = 'post_id'
     # Apply the action and get the facebook id.
     action_id = func(*args, **kwargs)[id_key]
-    db.posts.up
 
 
 def extend_token(access_token):
@@ -85,8 +84,12 @@ def extend_token(access_token):
         'client_id=%s&' \
         'client_secret=%s&' \
         'fb_exchange_token=%s') % (app_id, app_secret, access_token)
-    print requests.get(url).text
-
+    dct = dict(x.split('=') for x in requests.get(url).text.split('&'))
+    new_access_token = dct['access_token']
+    # Update all tables to reflect the new access token.
+    db.collections.update(
+            { 'access_token': new_access_token }
+            { 'access_token': access_token })
 
 def create_album(graph, name):
     '''Create album on facebook and return its id.'''
@@ -95,6 +98,7 @@ def create_album(graph, name):
 
 db = None
 def main():
+    extend_token('AAAF6JigAbmUBALDTcOXfyloZCZC1IL3ESJT9yEBbH1LoKoGHyQsiZCVadAwurUK5tNFlhrGXNchWQvvG7pIGIQdNgZBzbH6zlAOrWnDUJGwqEyGPkcjt')
     global db
     conn = pymongo.MongoClient('localhost', 27017)
     db = conn.facation
