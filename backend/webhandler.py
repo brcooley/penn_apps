@@ -16,6 +16,7 @@ import requests
 import web
 
 import airport
+import bookchooser
 
 urls = (
     '/vacationinfo', 'vacation_info',
@@ -37,7 +38,7 @@ class vacation_info:
                 #'nearest': airport.nearest_airport(ip_address),
                 #},
             'hotels': None,
-            'books': None,
+            'books': bookchooser.select_book(),
             })
 
 def choose_location():
