@@ -15,6 +15,7 @@
 
 import os
 import sys
+from multiprocessing import Queue
 
 import daemon
 import facebook
@@ -48,7 +49,10 @@ def main():
 
 
 if __name__ == '__main__':
+    usage = 'Usage: %s [test|start|status]' % sys.argv[0]
     if len(sys.argv) < 2:
+        print usage
+    elif sys.argv[1] == 'test':
         main()
     elif sys.argv[1] == 'start':
         # Tests if you have write access to pidfile_path
@@ -61,9 +65,9 @@ if __name__ == '__main__':
                 os.unlink(pidfile_path)
     elif sys.argv[1] == 'status':
         if os.path.exists(pidfile_path):
-            print 'Running as PID %d.' % read_pidfile()
+            print 'Daemon is running as PID %d.' % read_pidfile()
         else:
-            print 'Not running.'
+            print 'Daemon is not running.'
     else:
-        print 'Usage: %s [start|status]' % sys.argv[0]
+        print usage
 
