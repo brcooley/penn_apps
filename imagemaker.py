@@ -19,15 +19,21 @@ def makePicture( fgroundURL , bgroundURL ):
     print
     print "foreground id? " , fgID
     print
-
+    ff.findfaces(fgID)
 
     ff.mugshot(fgID)
-    while ff.mugshot_status(fgID) == 'pending' :
-        time.sleep(2)
-    print "\n STATUS " , ff.mugshot_status(fgID)
+    while ff.mugshot_status(fgID)['mugshot_status'] == 'pending' :
+        time.sleep(10)
+
+    #print "\n STATUS " , ff.mugshot_status(fgID)
 
     if ff.mugshot_status(fgID) == 'failed':
         assert False
+        
+    
+    #print '\n is the mugshot here??? '
+    #ff.get(fgID, {'version':'MugshotMask'})
+
 
     print "adding background..."
 
@@ -39,8 +45,9 @@ def makePicture( fgroundURL , bgroundURL ):
     print
     print 'merging...'
 
-    mergedata = [{"image_id":bgID}, {"image_id":fgID, "version":"MugshotMasked", "x":"200", "y":"100" , "scale":"75" , "angle":"0", "flip":0}]
-    return ff.merge(mergedata)# might want to bring this out to a url; make it easier to proccess elsewhere
+    mergedata = [{"image_id":bgID}, {"image_id":fgID, "version":"MugshotMasked", "x":"200", "y":"200" , "scale":"75" , "angle":"0", "flip":0}]
+    mergedID = ff.merge(mergedata, params = {'privacy':'public'} )['ImageVersion']['image_id']
+    return "http://flashfotoapi.com/api/get/" + mergedID +"?partner_username=ncschaaf&partner_apikey=DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g"
     #return ff.get(mergedID)
     
     
