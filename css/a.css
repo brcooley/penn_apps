@@ -83,8 +83,12 @@ body {
   background-size: cover; }
 
 h1 {
-  font-size: 2em;
+  font-size: 4em;
   text-transform: uppercase; }
+
+h5 {
+  font-size: 1.2em;
+  font-weight: normal; }
 
 #wrapper {
   margin: 10px auto;
@@ -101,7 +105,7 @@ h1 {
   background: #3b5998;
   font-size: 1.4em;
   font-weight: bold;
-  border: 1px solid #1e2e4f;
+  border: 1px solid #2d4373;
   border-radius: 6px;
   -webkit-transition: background .5s ease, border .5s ease;
   -moz-transition: background .5s ease, border .5s ease;
