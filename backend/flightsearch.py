@@ -16,6 +16,7 @@
 # near the beginning and the high-agony, high-connection 
 # flights are at the end
 
+import pprint
 import requests
 import pprint
 import dateutil.parser
@@ -69,6 +70,5 @@ def getFlights(routes):
 	  routings.append(trip)
 	  #print '\n'
 	return routings
-
 
 main()

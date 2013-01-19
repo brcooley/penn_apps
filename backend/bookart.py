@@ -4,7 +4,7 @@
 # nytimes best sellers
 
 import requests
-import simplejson
+import json
 
 class BookArt:
 
@@ -37,5 +37,5 @@ class BookArt:
 
         r = requests.get(final_url)
 
-        j = simplejson.loads(r.content)
+        j = json.loads(r.content)
         return j

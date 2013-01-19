@@ -44,7 +44,7 @@ class FlashFoto:
         response = conn.getresponse()
         data = response.read()
         
-        print "data: " + data
+        #print "data: " + data
 
         # There was an API error
         if response.status != 200:
@@ -53,7 +53,7 @@ class FlashFoto:
             raise FlashFotoException(data['code'], data['message'])
         # Return a valid response
         if decode:
-            print 'decoding json data, no errors yet...'
+            #print 'decoding json data, no errors yet...'
             data = json.loads(data)
         return data
 
@@ -69,15 +69,15 @@ class FlashFoto:
     Adds an image
     '''
     def add(self, image_data=None, params=None):
-        print image_data
-        print params
+        #print image_data
+        #print params
         url = self.__url_with_param_string('add', params)
         print url
         if image_data:
-            print "i hope this isnt happening"
+            #print "i hope this isnt happening"
             return self.__make_request(url, 'POST', image_data)
         else: 
-            print "now i am confused"
+            #print "now i am confused"
             return self.__make_request(url)  
 
     '''

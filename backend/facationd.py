@@ -49,9 +49,10 @@ def write_pidfile():
 
 def read_jobs():
     '''Read jobs that are ready to be executed.'''
-    debug('reading jobs (although not really yet)')
-    return []
-
+    global db
+    return list(db.jobs.find({
+        'timestamp': { '$lte': time.time() },
+        }))
 
 def execute_job(job):
     global db
@@ -67,7 +68,8 @@ def execute_job(job):
             { 'location': 1, 'album_id': 1, '_id': 0 })
         # Create the facebook album if it doesn't exists.
         if album_id is None:
-            album_id = create_album('Awesome %s Photos!' % location.title)
+            album_id = create_album('Awesome %s Photos!' % \
+                    location.title())
             db.vacations.update(
                 { 'access_token': access_token },
                 { 'album_id': album_id })
@@ -83,6 +85,19 @@ def create_album(graph, name):
     return graph.put_object('me', 'albums', name=name)['id']
 
 
+def extend_token(access_token):
+    url = ('https://graph.facebook.com/oauth/access_token?' + \
+        'grant_type=fb_exchange_token&' \
+        'client_id=%s&' \
+        'client_secret=%s&' \
+        'fb_exchange_token=%s') % (app_id, app_secret, access_token)
+    dct = dict(x.split('=') for x in requests.get(url).text.split('&'))
+    db.collections.update(
+        { 'access_token', new_access_token },
+        { 'access_token', access_token })
+    return dct['access_token']
+ 
+
 db = None
 def main():
     global db
@@ -92,7 +107,9 @@ def main():
         pool = multiprocessing.Pool(processes=num_processes)
         while True:
             debug('reading and executing jobs asynchronously')
-            pool.apply_async(execute_job, read_jobs())
+            jobs = read_jobs()
+            debug('jobs: %s' % jobs)
+            pool.apply_async(execute_job, jobs)
             debug('sleeping %d seconds' % update_interval)
             time.sleep(update_interval)
             break

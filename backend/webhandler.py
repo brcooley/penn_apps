@@ -6,6 +6,7 @@ take photo,
     return filepicker'd pictures
 '''
 
+import datetime
 import json
 import os
 import random
@@ -16,58 +17,74 @@ import requests
 import web
 
 import airport
-import flickrsearch
+import bookchooser
 
 urls = (
     '/vacationinfo', 'vacation_info',
+    '/start',        'start',
     )
 
 class vacation_info:
-    def GET(self):
-        print web.input()
-        return self.POST()
     def POST(self):
-        print web.data()
-        location = choose_location() 
-        ip_address = web.ctx.ip
+        print web.input()
+        #access_token = web.input()['access_token']
+
+        # Location and length of trip.
+        location = rand_location() 
+        length = random.randrange(3, 15)
+
+        # Arguments for flights api.
+        geo = airport.getGeoInfo(web.ctx.ip)
+        city, state = geo['city'], geo['region_code']
+        start_date = datetime.datetime.now()
+        end_date = start_date + datetime.timedelta(days=length)
+
+        # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')
         web.header('Content-Type', 'application/json')
         return json.dumps({
-            'location': location,
-            'photos': list(flickrsearch.iter_results(location)),
-            'flights': {
-                'nearest': airport.nearest_airport(ip_address),
-                },
+            'location': location['name'],
+            'photos': location['photos'][:10],
+            'flights': None,
             'hotels': None,
-            'books': None,
+            'books': bookchooser.select_book(),
+            'length': length,
             })
 
-def choose_location():
-    return random.choice((
-        'Hawaii',
-        'New York City',
-        'Prague',
-        'Bankok',
-        'Williamsburg',
-        ))
+class start:
+    def POST(self):
+        # expect access_token and location
+        locals().update(web.input())
 
-def extend_token(access_token):
-    url = ('https://graph.facebook.com/oauth/access_token?' + \
-        'grant_type=fb_exchange_token&' \
-        'client_id=%s&' \
-        'client_secret=%s&' \
-        'fb_exchange_token=%s') % (app_id, app_secret, access_token)
-    dct = dict(x.split('=') for x in requests.get(url).text.split('&'))
-    new_access_token = dct['access_token']
-    # Update all tables to reflect the new access token.
-    conn = pymongo.MongoClient('localhost', 27017) 
-    db = conn.facation
-    db.collections.update(
-        { 'access_token': new_access_token },
-        { 'access_token': access_token })
-    conn.close()
-    return new_access_token
- 
+        # Add this vacation to the db.
+        conn = pymongo.MongoClient('localhost', 27017)
+        try:
+            db = conn.facation
+            db.vacations.insert({
+                'access_token': access_token,
+                'location': location,
+                'album_id': None
+                })
+        finally:
+            db.close()
+
+        # Schedule all the facebook stuff here!!!!!!!!!
+
+        # Headers and json return dictionary.
+        web.header('Access-Control-Allow-Origin', '*')
+        web.header('Content-Type', 'application/json')
+        return json.dumps({
+            })
+
+def rand_location():
+    conn = pymongo.MongoClient('localhost', 27017)
+    try:
+        db = conn.facation
+        return random.choice(list(db.locations.find(
+            {}, {'name': 1, 'photos': 1, '_id': 0})))
+    finally:
+        conn.close()
+
 
 if __name__ == '__main__':
     app = web.application(urls, globals())

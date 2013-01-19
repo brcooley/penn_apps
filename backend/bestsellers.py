@@ -1,9 +1,9 @@
 # bestsellers.py
 # @author Mike
-# class for simple best sellers queries of the nytimes api
+# class for  best sellers queries of the nytimes api
 
 import requests
-import simplejson
+import json
 
 
 class BestSellers:
@@ -32,7 +32,7 @@ class BestSellers:
 
         r = requests.get(final_url)
 
-        j = simplejson.loads(r.content)
+        j = json.loads(r.content)
         return j[u'results']
 
     def get_list(self, list_name):
@@ -42,6 +42,6 @@ class BestSellers:
 
         r = requests.get(final_url)
 
-        j = simplejson.loads(r.content)
+        j = json.loads(r.content)
         return j[u'results']
 
