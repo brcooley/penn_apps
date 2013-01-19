@@ -17,8 +17,13 @@ def main():
     print "lat:  "+ lat
     print 'long: ' + lon
     airports = csv.DictReader('airports.dat')
-    minDistance = min([distance(lat, lon, entry['LATITUDE'], entry['LONGITITUDE']) for entry in airports])
-    print "min distance: " +  minDistance
+    #minDistance = min([distance(lat, lon, entry['LATITUDE'], entry['LONGITITUDE']) for entry in airports])
+    #print "min distance: " +  minDistance
+
+    distances = (distance(lat, lon, entry['LATITUDE'], \
+            entry['LONGITUDE']) for entry in airports)
+    min_distance = min(zip(distances, airports), key=lambda x: x[0])
+    print 'min distance: ', min_distance
 
 
 main()
