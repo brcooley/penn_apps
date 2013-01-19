@@ -15,8 +15,8 @@ import pymongo
 import requests
 import web
 
-from airport import nearest_airport
-
+import airport
+import flickrsearch
 
 urls = (
     '/vacationinfo', 'vacation_info',
@@ -34,9 +34,9 @@ class vacation_info:
         web.header('Content-Type', 'application/json')
         return json.dumps({
             'location': location,
-            'photos': None,
+            'photos': list(flickrsearch.iter_results(location)),
             'flights': {
-                'nearest': nearest_airport(ip_address),
+                'nearest': airport.nearest_airport(ip_address),
                 },
             'hotels': None,
             'books': None,
@@ -44,11 +44,11 @@ class vacation_info:
 
 def choose_location():
     return random.choice((
-        'Honolulu, Hawaii',
-        'New York City, New York',
-        'Prague, Czech Republic',
-        'Bankok, Thailand',
-        'Williamsburg, Virginia',
+        'Hawaii',
+        'New York City',
+        'Prague',
+        'Bankok',
+        'Williamsburg',
         ))
 
 def extend_token(access_token):
