@@ -36,6 +36,11 @@ pidfile_path = '/var/run/pennapps.pid'
 update_interval = 60
 num_processes = 4
 
+debug = True
+def debug(mesg):
+    if debug:
+        print 'debug: ' + mesg
+
 
 def read_pidfile():
     with open(pidfile_path) as pidfile:
@@ -49,6 +54,7 @@ def write_pidfile():
 
 def read_jobs():
     '''Read jobs that are ready to be executed.'''
+    debug('reading jobs (although not really yet)')
     return []
 
 
@@ -59,7 +65,9 @@ def execute_job():
 def main():
     pool = multiprocessing.Pool(processes=num_processes)
     while True:
+        debug('reading and executing jobs asynchronously')
         pool.apply_async(execute_job, read_jobs())
+        debug('sleeping %d seconds' % update_interval)
         time.sleep(update_interval)
 
 
