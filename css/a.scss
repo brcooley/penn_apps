@@ -10,8 +10,13 @@ body {
 	background-size: cover;
 }
 h1 {
-	font-size: 2em;
+	font-size: 4em;
+	// letter-spacing: 0.25em;
 	text-transform: uppercase;
+}
+h5 {
+	font-size: 1.2em;
+	font-weight: normal;
 }
 header {
 	// margin: 20px 0;
@@ -37,7 +42,7 @@ header {
 
 	font-size: 1.4em;
 	font-weight: bold;
-	border: 1px solid darken($fb-blue, 20%);
+	border: 1px solid darken($fb-blue, 10%);
 	border-radius: 6px;
 
 	@include transition("background .5s ease, border .5s ease");

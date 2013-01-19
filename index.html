@@ -82,6 +82,8 @@
 	<script>
 		$('#login-btn').click(function() {
 			login();
+			// send AuthToken to python service
+			window.location.assign('/generate')
 		});
 	</script>
 </body>
