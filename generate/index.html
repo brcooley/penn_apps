@@ -8,13 +8,31 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
+	<script>
+		$.ajax({
+			type: 'POST',
+			url: 'http://pennapps.cloudapp.net:8080/vacationinfo',
+			data: {'access_token': window.localStorage['auth_tok']},
+			success: function(response) {
+				console.log(response);
+				$(".load").fadeOut(500, function() {
+					spinner.stop();
+					$(".delay").fadeIn(500, function() {});
+				});
+			},
+			dataType: 'json'
+		});
+	</script>
 	<div id="wrapper">
 		<header>
-			<h1>Facation</h1>
-			<h5>Generating your amazing vacation!</h5>
+			<h1><a href="/">Facation</a></h1>
+			<h5 class="load">Generating your amazing vacation!</h5>
 		</header>
 		<section>
-			<div id="loading"></div>
+			<div id="loading" class="load"></div>
+			<div class="delay">
+				<button id="book-btn">Book my Facation!</button><button id="retry-btn">Not awesome enough, give me another</button>
+			</div>
 		</section>
 		<footer>
 			Using the Facebook API, Masherly (Hotwire), Azure, NYTimes, and more!
@@ -23,38 +41,44 @@
 	<script src="/js/spin.min.js"></script>
 	<script type="text/javascript">
 
-		var opts = {
-		    lines: 11, // The number of lines to draw
-		    length: 6, // The length of each line
-		    width: 11, // The line thickness
-		    radius: 20, // The radius of the inner circle
-		    corners: 1, // Corner roundness (0..1)
-		    rotate: 38, // The rotation offset
-		    color: '#000', // #rgb or #rrggbb
-		    speed: 0.9, // Rounds per second
-		    trail: 58, // Afterglow percentage
-		    shadow: false, // Whether to render a shadow
-		    hwaccel: false, // Whether to use hardware acceleration
-		    className: 'spinner', // The CSS class to assign to the spinner
-		    zIndex: 2e9, // The z-index (defaults to 2000000000)
-		    top: '50%', // Top position relative to parent in px
-		    left: 'auto' // Left position relative to parent in px
-		};
-		var target = document.getElementById('loading');
-		var spinner = new Spinner(opts).spin(target);
+		$(window).load(function() {
+			var opts = {
+			    lines: 9, // The number of lines to draw
+			    length: 2, // The length of each line
+			    width: 15, // The line thickness
+			    radius: 20, // The radius of the inner circle
+			    corners: 0.95, // Corner roundness (0..1)
+			    rotate: 24, // The rotation offset
+			    color: '#ddd', // #rgb or #rrggbb
+			    speed: 0.9, // Rounds per second
+			    trail: 49, // Afterglow percentage
+			    shadow: false, // Whether to render a shadow
+			    hwaccel: true, // Whether to use hardware acceleration
+			    className: 'spinner', // The CSS class to assign to the spinner
+			    // zIndex: 2e9, // The z-index (defaults to 2000000000)
+			    top: '50%', // Top position relative to parent in px
+			    left: 'auto' // Left position relative to parent in px
+			};
+			var target = document.getElementById('loading');
+			var spinner = new Spinner(opts).spin(target);
 
-		setTimeout(function() {
-			spinner.stop();
-			$("#loading").append('<button id="book-btn">Book my Facation!</button><button id="retry-btn">Not awesome enough, give me another</button>');
-		}, 3000);
+			function show_data(response) {
+				console.log(response);
+				$(".load").fadeOut(500, function() {
+					spinner.stop();
+					$(".delay").fadeIn(500, function() {});
+				});
 
-		$('#book-btn').click(function() {
-			// tell server to confirm registration
-			window.location.assign('/finish');
-		});
+			}
 
-		$('#retry-btn').click(function() {
-			// send another request to server
+			$('#book-btn').click(function() {
+				// tell server to confirm registration
+				window.location.assign('/thanks');
+			});
+
+			$('#retry-btn').click(function() {
+				// send another request to server
+			});
 		});
 	</script>
 </body>

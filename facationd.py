@@ -13,13 +13,16 @@
 # --python daemon
 # install it from here: http://pypi.python.org/pypi/python-daemon/
 
+import ConfigParser
 import multiprocessing.dummy as multiprocessing # Use threads.
 import os
 import sys
 import time
+import urllib
 
 import daemon
 import facebook
+import requests
 import pymongo
 
 
@@ -50,35 +53,64 @@ def read_jobs():
     return []
 
 
-def execute_job(access_token, *args):
+def execute_job(job):
+    global db
+    access_token, action, args, kwargs = job
     graph = facebook.GraphAPI(access_token)
-
-    # put_wall_post: message, attachment={}, profile_id="me"
-    if args[0] == 'put_wall_post':
-        post_id =  graph.put_wall_post()['id']
-        # maybe store it
-        
-    # put_photo: image, message=None, album_id=None
-    elif args[0] == 'post_photo':
-        album_id = None # get the album_id
-        post_id = graph.put_photo('me', message, album_id)
-        # maybe store it
+    if action == 'put_wall_post':
+        func = graph.put_wall_post
+        id_key = 'id'
+    elif action == 'put_photo':
+        # Retrieve the album_id and location for this vacation.
+        location, album_id = db.vacations.find_one(
+            { 'access_token': access_token },
+            { 'location': 1, 'album_id': 1, '_id': 0 })
+        # Create the facebook album if it doesn't exists.
+        if album_id is None:
+            album_id = create_album('Awesome %s Photos!' % location.title)
+            db.vacations.update(
+                { 'access_token': access_token },
+                { 'album_id': album_id })
+        kwargs['album_id'] = album_id
+        func = graph.put_photo
+        id_key = 'post_id'
+    # Apply the action and get the facebook id.
+    action_id = func(*args, **kwargs)[id_key]
 
 
 def create_album(graph, name):
+    '''Create album on facebook and return its id.'''
     return graph.put_object('me', 'albums', name=name)['id']
 
 
+db = None
 def main():
-    pool = multiprocessing.Pool(processes=num_processes)
-    while True:
-        debug('reading and executing jobs asynchronously')
-        pool.apply_async(execute_job, read_jobs())
-        debug('sleeping %d seconds' % update_interval)
-        time.sleep(update_interval)
-        break
+    global db
+    conn = pymongo.MongoClient('localhost', 27017)
+    db = conn.facation
+    try:
+        pool = multiprocessing.Pool(processes=num_processes)
+        while True:
+            debug('reading and executing jobs asynchronously')
+            pool.apply_async(execute_job, read_jobs())
+            debug('sleeping %d seconds' % update_interval)
+            time.sleep(update_interval)
+            break
+    finally:
+        conn.close()
 
-
+config = ConfigParser.RawConfigParser()
+try:
+    with open(os.path.expanduser('~/.facationd.conf')) as f:
+        config.readfp(f)
+    app_id = config.get('facationd', 'app_id')
+    app_secret = config.get('facationd', 'app_secret')
+    assert app_id and app_secret
+except AssertionError:
+    print 'config needs keys app_id and app_secret under [facationd]'
+except IOError:
+    print 'missing config file ~/.facationd.conf'
+ 
 if __name__ == '__main__':
     usage = 'Usage: %s [test|start|status]' % sys.argv[0]
     if len(sys.argv) < 2:

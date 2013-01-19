@@ -6,8 +6,21 @@ body {
 	color: $fg;
 	text-align: center;
 
+	background: no-repeat center center fixed;
 	background-image: url('http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg');
 	background-size: cover;
+}
+a {
+	@include transition("color .5s ease");
+	color: $link;
+
+	&:hover {
+		@include transition("color .5s ease");
+		color: $link-hover;
+	}
+	&:visited {
+		color: $link-visit;
+	}
 }
 h1 {
 	font-size: 4em;
@@ -22,8 +35,7 @@ header {
 	// margin: 20px 0;
 }
 button {
-	// display: inline-block;
-	margin: 20px 0;
+	margin: 20px 10px;
 	padding: 10px;
 	color: $fg;
 	background: $fb-blue;
@@ -43,6 +55,16 @@ button {
 		border-color: $fb-blue;
 
 	}
+}
+
+// CLASS //
+.delay {
+	display: none;
+	// visibility: hidden;
+	width: 940px;
+}
+.below {
+	margin-bottom: 20px;
 }
 
 // ID //
