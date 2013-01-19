@@ -16,7 +16,6 @@ import requests
 import web
 
 import airport
-import flickrsearch
 
 urls = (
     '/vacationinfo', 'vacation_info',
@@ -24,7 +23,6 @@ urls = (
 
 class vacation_info:
     def GET(self):
-        print web.input()
         return self.POST()
     def POST(self):
         print web.data()
@@ -33,23 +31,23 @@ class vacation_info:
         web.header('Access-Control-Allow-Origin', '*')
         web.header('Content-Type', 'application/json')
         return json.dumps({
-            'location': location,
-            'photos': list(flickrsearch.iter_results(location)),
-            'flights': {
-                'nearest': airport.nearest_airport(ip_address),
-                },
+            'location': location['name'],
+            'photos': location['photos'],
+            'flights': None,#{
+                #'nearest': airport.nearest_airport(ip_address),
+                #},
             'hotels': None,
             'books': None,
             })
 
 def choose_location():
-    return random.choice((
-        'Hawaii',
-        'New York City',
-        'Prague',
-        'Bankok',
-        'Williamsburg',
-        ))
+    conn = pymongo.MongoClient('localhost', 27017)
+    try:
+        db = conn.facation
+        return random.choice(list(db.locations.find(
+            {}, {'name': 1, 'photos': 1, '_id': 0})))
+    finally:
+        conn.close()
 
 def extend_token(access_token):
     url = ('https://graph.facebook.com/oauth/access_token?' + \
