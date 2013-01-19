@@ -26,10 +26,12 @@ webpage with what is going to happen
 
 
 ---------------API--------------------
-masherly (hotwire)
+masherly (expedia)
+hipmunk
 google search
 nytimes
 facebook
+flashfoto
 mongoDB, pyMongo
 azure (hosting)
 filepicker.io (picture cropping)
