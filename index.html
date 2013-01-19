@@ -83,7 +83,7 @@
 	<script>
 		$('#login-btn').click(function() {
 			login();
-			// send AuthToken to python service
+			window.localStorage['auth_tok'] = auth_tok;
 			window.location.assign('/generate')
 		});
 	</script>
