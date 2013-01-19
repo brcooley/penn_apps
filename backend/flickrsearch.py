@@ -32,4 +32,9 @@ def iter_results(text):
            #print photoLoc[0][0].attrib['latitude']
            #print photoLoc[0][0].attrib['longitude']
            photoSizes = flickr.photos_getSizes(photo_id=photo.attrib['id'])
-           yield photoSizes[0][7].attrib['source']
+           for i in range(9, 5, -1):
+               try:
+                   yield photoSizes[0][i].attrib['source']
+                   break
+               except IndexError:
+                   continue
