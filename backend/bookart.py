@@ -11,6 +11,7 @@ class BookArt:
     __API_DOMAIN = 'http://ajax.googleapis.com'
     __API_ENDPOINT_ROOT = '/ajax/services/search/images?'
     __API_VERSION = 'v=1.0'
+    __API_QUERY = '&q='
 
     def __init__(self):
         pass
@@ -18,15 +19,16 @@ class BookArt:
     def get_api_url(self):
         return self.__API_DOMAIN + \
                 self.__API_ENDPOINT_ROOT + \
-                self.__API_VERSION
+                self.__API_VERSION + \
+		self.__API_QUERY
 
     def append_title(self, url, title):
-        urlEnd
+        urlEnd = ''
         tArray = title.split()
         for token in tArray:
             urlEnd += token + '%20' 
         urlEnd + 'cover%20art'
-        final_url = url + urlEnd
+        final_url = url + urlEnd + 'book%20cover%20'
         return final_url
 
     def get_art(self, title):
