@@ -16,59 +16,63 @@
 # near the beginning and the high-agony, high-connection 
 # flights are at the end
 
+import datetime
+import dateutil.parser
 import pprint
 import requests
-import pprint
-import dateutil.parser
 
 OUTGOING = 0
 RETURN = 1
 
-def main():
-	csrf = requests.get('http://www.hipmunk.com')
-	search_strings = { 'i': 'Philidelphia.Denver,Jan26.Feb2' }
-	#search_strings = { 'i': 'Philidelphia+PA.Chicago,Jan26.Feb2' }
-	headers = { 'X-Csrf-Token': csrf.headers['X-Csrf-Token'] }
-	raw_data = requests.post('http://www.hipmunk.com/api/results', \
-	    data=search_strings, headers=headers)
-	#pprint.pprint(raw_data.json()['routings'])
+def select_flight(from_, to, start_date, end_date):
+    start_date = start_date.strftime('%b%d')
+    end_date = end_date.strftime('%b%d')
+    print from_, to, start_date, end_date
+    csrf = requests.get('http://www.hipmunk.com')
+    search_strings = { 'i': '%s.%s,%s.%s' % \
+            (from_, to, start_date, end_date)}
+    #search_strings = { 'i': 'Philidelphia+PA.Chicago,Jan26.Feb2' }
+    headers = { 'X-Csrf-Token': csrf.headers['X-Csrf-Token'] }
+    raw_data = requests.post('http://www.hipmunk.com/api/results', \
+        data=search_strings, headers=headers)
+    #pprint.pprint(raw_data.json()['routings'])
 
-	#splits flights into outgoing and returns
-	outgoingFlights = raw_data.json()['routings'][OUTGOING]
-	returnFlights = raw_data.json()['routings'][RETURN]
+    #splits flights into outgoing and returns
+    outgoingFlights = raw_data.json()['routings'][OUTGOING]
+    returnFlights = raw_data.json()['routings'][RETURN]
 
-	itineraries = {'outgoing': getFlights(outgoingFlights), \
-	    'return': getFlights(returnFlights)}
-	#pprint.pprint(itineraries)
-	
-	#take the first flight?
-	#-----------------------------------------------------#
-	#T0D0: write code here with a heuristic that selects
-	#an itinerary
-	#-----------------------------------------------------#
+    pprint.pprint(outgoingFlights[0])
+    pprint.pprint(returnFlights[0])
+    return {'outgoing': getFlights(outgoingFlights[0]), \
+        'return': getFlights(returnFlights[0])}
+    #pprint.pprint(itineraries)
+    
+    #take the first flight?
+    #-----------------------------------------------------#
+    #T0D0: write code here with a heuristic that selects
+    #an itinerary
+    #-----------------------------------------------------#
 
+def getFlights(route):
+    routings = []
+    #for route in routes:
+    flights = route['legs']
+    trip = []
+    for flight in flights:
+        num = flight['marketing_num'][0] + ' ' + str(flight['marketing_num'][1])
+        #print num
+        origin = flight['from_code']
+        #print origin
+        dest = flight['to_code']
+        #print dest
+        depart = dateutil.parser.parse(flight['depart']).strftime('%m/%d/%y')
+        #print depart
+        arrive = dateutil.parser.parse(flight['arrive']).strftime('%m/%d/%y')
+        #print arrive
+        leg = {'flight': num, 'origin': origin, 'dest': dest, \
+            'takeoff': depart, 'arrive': arrive}
+        trip.append(leg)
+    routings.append(trip)
+    #print '\n'
+    return routings
 
-def getFlights(routes):
-	routings = []
-	for route in routes:
-	  flights = route['legs']
-	  trip = []
-	  for flight in flights:
-	    num = flight['marketing_num'][0] + ' ' + str(flight['marketing_num'][1])
-	    #print num
-	    origin = flight['from_code']
-	    #print origin
-	    dest = flight['to_code']
-	    #print dest
-	    depart = dateutil.parser.parse(flight['depart'])
-	    #print depart
-	    arrive = dateutil.parser.parse(flight['arrive'])
-	    #print arrive
-	    leg = {'flight': num, 'origin': origin, 'dest': dest, \
-		'takeoff': depart, 'arrive': arrive}
-	    trip.append(leg)
-	  routings.append(trip)
-	  #print '\n'
-	return routings
-
-main()
