@@ -90,15 +90,7 @@ h5 {
   font-size: 1.2em;
   font-weight: normal; }
 
-#wrapper {
-  margin: 10px auto;
-  padding: 10px;
-  width: 960px;
-  font-size: 1.4em;
-  background: rgba(34, 34, 34, 0.5);
-  border-radius: 10px; }
-
-#login-btn {
+button {
   margin: 20px 0;
   padding: 10px;
   color: #dddddd;
@@ -111,7 +103,7 @@ h5 {
   -moz-transition: background .5s ease, border .5s ease;
   -o-transition: background .5s ease, border .5s ease;
   transition: background .5s ease, border .5s ease; }
-  #login-btn:hover {
+  button:hover {
     -webkit-transition: background .5s ease, border .5s ease;
     -moz-transition: background .5s ease, border .5s ease;
     -o-transition: background .5s ease, border .5s ease;
@@ -119,3 +111,14 @@ h5 {
     cursor: pointer;
     background: #2d4373;
     border-color: #3b5998; }
+
+#wrapper {
+  margin: 10px auto;
+  padding: 10px;
+  width: 960px;
+  font-size: 1.4em;
+  background: rgba(34, 34, 34, 0.5);
+  border-radius: 10px; }
+
+#loading {
+  height: 200px; }

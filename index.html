@@ -21,6 +21,7 @@
 	    });
 	    FB.getLoginStatus(function(response) {
 	    	console.log('Got login status: ' + response.authResponse.accessToken);
+	    	auth_tok = response.authResponse.accessToken;
 		    if (response.status === 'connected') {
 		        // connected
 		        // testAPI();
@@ -76,7 +77,7 @@
 			<button id="login-btn">Login With Facebook</button>
 		</section>
 		<footer>
-			Using the Facebook API, Masherly (Hotwire), Wego (Flights), Azure, NYTimes, and more!
+			Using the Facebook API, Masherly (Hotwire), Azure, NYTimes, and more!
 		</footer>
 	</div>
 	<script>

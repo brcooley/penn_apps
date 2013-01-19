@@ -8,25 +8,26 @@ import simplejson
 
 class BookArt:
 
-  __API_DOMAIN = 'http://ajax.googleapis.com'
-  __API_ENDPOINT_ROOT = '/ajax/services/search/images?'
-  __API_VERSION = 'v=1.0'
+    __API_DOMAIN = 'http://ajax.googleapis.com'
+    __API_ENDPOINT_ROOT = '/ajax/services/search/images?'
+    __API_VERSION = 'v=1.0'
 
-  def __init__(self):
+    def __init__(self):
+        pass
 
     def get_api_url(self):
-      return self.__API_DOMAIN            \
-	  + self.__API_ENDPOINT_ROOT    \
-	  + self.__API_VERSION        
+        return self.__API_DOMAIN + \
+                self.__API_ENDPOINT_ROOT + \
+                self.__API_VERSION
 
     def append_title(self, url, title):
-      urlEnd
-      tArray = title.split()
-      for token in tArray:
-	urlEnd += token + '%20' 
-      urlEnd + 'cover%20art'
-      final_url = url + urlEnd
-      return final_url
+        urlEnd
+        tArray = title.split()
+        for token in tArray:
+            urlEnd += token + '%20' 
+        urlEnd + 'cover%20art'
+        final_url = url + urlEnd
+        return final_url
 
     def get_art(self, title):
         url = self.get_api_url()
