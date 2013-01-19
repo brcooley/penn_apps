@@ -13,9 +13,9 @@ $fb-blue: #3b5998;
 
 $fg: $light;
 $bg: $dark;
-$link: $accent;
-$link-hover: #d4ff00;
-$link-visit: desaturate($link, 50%);
+$link: $light;
+$link-hover: $light-emp;
+$link-visit: $link;
 $border-color: $light;
 $icon-label-hide: rgba(201,201,201,0); // Should be transparent, color is defined for transition
 $icon-label-show: $fg;
