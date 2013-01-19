@@ -15,9 +15,11 @@ import pymongo
 import requests
 import web
 
+from airport import nearest_airport
+
 
 urls = (
-        '/vacationinfo', 'vacation_info',
+    '/vacationinfo', 'vacation_info',
     )
 
 class vacation_info:
@@ -33,7 +35,9 @@ class vacation_info:
         return json.dumps({
             'location': location,
             'photos': None,
-            'flights': None,
+            'flights': {
+                'nearest': nearest_airport(ip_address),
+                },
             'hotels': None,
             'books': None,
             })
