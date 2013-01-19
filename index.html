@@ -10,6 +10,8 @@
 <body>
 	<div id="fb-root"></div>
 	<script>
+	var auth_tok = 'undefined';
+
 	// Additional JS functions here
 	window.fbAsyncInit = function() {
 	    FB.init({
@@ -20,16 +22,16 @@
 	        xfbml      : true  // parse XFBML
 	    });
 	    FB.getLoginStatus(function(response) {
-	    	console.log('Got login status: ' + response.authResponse.accessToken);
-	    	auth_tok = response.authResponse.accessToken;
 		    if (response.status === 'connected') {
 		        // connected
+	    		console.log('Got login status: ' + response.authResponse.accessToken);
+		    	auth_tok = response.authResponse.accessToken;
   		    } else if (response.status === 'not_authorized') {
 		    	// not_authorized
-			    login();
+			    // login();
 		    } else {
 			    // not_logged_in
-			    login();
+			    // login();
 		    }
 		});
 
@@ -42,11 +44,21 @@
 	    FB.login(function(response) {
 	        if (response.authResponse) {
 	            // connected
+	    		auth_tok = response.authResponse.accessToken;
+
 	        } else {
 	            // cancelled
 	        }
 	    });
 	}
+
+	$(window).load(function() {
+		$('#login-btn').click(function() {
+			login();
+			window.localStorage['auth_tok'] = auth_tok;
+			window.location.assign('/generate')
+		});
+	});
 
 	// Load the SDK Asynchronously
 	(function(d) {
@@ -70,12 +82,5 @@
 			Using the Facebook API, Masherly (Hotwire), Azure, NYTimes, and more!
 		</footer>
 	</div>
-	<script>
-		$('#login-btn').click(function() {
-			login();
-			window.localStorage['auth_tok'] = auth_tok;
-			window.location.assign('/generate')
-		});
-	</script>
 </body>
 </html>
