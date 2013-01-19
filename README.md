@@ -1,13 +1,10 @@
-penn_apps
-=========
+penn_apps 2013: Facation
+========================
 
-Spring 2013 Penn Apps Repository
-* Mike was here
-* so was Peter
-* NAthan too
+Plan a fake facation and do it on facebook blah blah blah Mike should write something here that makes this sound good when he wakes up from his nap.
 
-
-We need a team name
+Brainstorming
+=============
 
 generate vacation
 	kayak?
