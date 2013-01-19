@@ -79,8 +79,23 @@ body {
   font: 62.5% "Open Sans", Tahoma, sans-serif;
   color: #dddddd;
   text-align: center;
-  background-image: url("http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg");
+  background: url("http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg") no-repeat center center fixed;
   background-size: cover; }
+
+a {
+  -webkit-transition: color .5s ease;
+  -moz-transition: color .5s ease;
+  -o-transition: color .5s ease;
+  transition: color .5s ease;
+  color: #dddddd; }
+  a:hover {
+    -webkit-transition: color .5s ease;
+    -moz-transition: color .5s ease;
+    -o-transition: color .5s ease;
+    transition: color .5s ease;
+    color: white; }
+  a:visited {
+    color: #dddddd; }
 
 h1 {
   font-size: 4em;
@@ -91,7 +106,7 @@ h5 {
   font-weight: normal; }
 
 button {
-  margin: 20px 0;
+  margin: 20px 10px;
   padding: 10px;
   color: #dddddd;
   background: #3b5998;
@@ -111,6 +126,13 @@ button {
     cursor: pointer;
     background: #2d4373;
     border-color: #3b5998; }
+
+.delay {
+  display: none;
+  width: 940px; }
+
+.below {
+  margin-bottom: 20px; }
 
 #wrapper {
   margin: 10px auto;
