@@ -13,9 +13,10 @@
 # --python daemon
 # install it from here: http://pypi.python.org/pypi/python-daemon/
 
+import multiprocessing.dummy as multiprocessing # Use threads.
 import os
 import sys
-from multiprocessing import Queue
+import time
 
 import daemon
 import facebook
@@ -32,6 +33,8 @@ print graph.get_object('me')
 '''
 
 pidfile_path = '/var/run/pennapps.pid'
+update_interval = 60
+num_processes = 4
 
 
 def read_pidfile():
@@ -44,8 +47,20 @@ def write_pidfile():
         pidfile.write('%d\n' % os.getpid())
 
 
-def main():
+def read_jobs():
+    '''Read jobs that are ready to be executed.'''
+    return []
+
+
+def execute_job():
     pass
+
+
+def main():
+    pool = multiprocessing.Pool(processes=num_processes)
+    while True:
+        pool.apply_async(execute_job, read_jobs())
+        time.sleep(update_interval)
 
 
 if __name__ == '__main__':
