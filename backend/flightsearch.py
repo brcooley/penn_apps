@@ -8,3 +8,5 @@ def main():
 	headers = { 'X-Csrf-Token': csrf.headers['X-Csrf-Token'] }
 	raw_data = requests.post(data=search_strings, headers=headers)
 	print(raw_data.json()['routings'])
+
+main()
