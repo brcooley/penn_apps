@@ -10,6 +10,10 @@
 </head>
 <body>
 	<script>
+		function add_content (data) {
+			$('.location').html(data.location);	
+		}
+
 		function request_itinerary() {
 			$.ajax({
 				type: 'POST',
@@ -19,6 +23,7 @@
 					console.log(response);
 					$(".load").fadeOut(500, function() {
 						spinner.stop();
+						add_content(response);
 						$(".delay").fadeIn(500);
 					});
 				},
@@ -64,6 +69,10 @@
 
 			$('.retry').click(function() {
 				// send another request to server
+				$('.delay').fadeOut(500);
+				$('.error').fadeOut(500);
+				$('.spinner').fadeIn(500);
+				spinner.spin();
 				request_itinerary();
 			});
 		});
@@ -76,7 +85,9 @@
 		<section>
 			<div id="loading" class="load"></div>
 			<div class="delay">
-				<section id="trip-info"></section>
+				<section id="trip-info">
+					For your amazing Facation, you will be flying to fabulous <span class="location"></span>!
+				</section>
 				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another</button>
 			</div>
 			<div class="error">
