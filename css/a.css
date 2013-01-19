@@ -128,7 +128,7 @@ button {
     background: #2d4373;
     border-color: #3b5998; }
 
-.delay {
+.delay, .error {
   display: none;
   width: 940px; }
 

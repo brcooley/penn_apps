@@ -6,40 +6,35 @@
 	<title>Facation</title>
 	<link rel="stylesheet" href="/css/a.css" />
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="/js/spin.min.js"></script>
 </head>
 <body>
 	<script>
-		$.ajax({
-			type: 'POST',
-			url: 'http://pennapps.cloudapp.net:8080/vacationinfo',
-			data: {'access_token': window.localStorage['auth_tok']},
-			success: function(response) {
-				console.log(response);
-				$(".load").fadeOut(500, function() {
-					spinner.stop();
-					$(".delay").fadeIn(500, function() {});
-				});
-			},
-			dataType: 'json'
-		});
-	</script>
-	<div id="wrapper">
-		<header>
-			<h1><a href="/">Facation</a></h1>
-			<h5 class="load">Generating your amazing vacation!</h5>
-		</header>
-		<section>
-			<div id="loading" class="load"></div>
-			<div class="delay">
-				<button id="book-btn">Book my Facation!</button><button id="retry-btn">Not awesome enough, give me another</button>
-			</div>
-		</section>
-		<footer>
-			Using the Facebook API, Masherly (Hotwire), Azure, NYTimes, and more!
-		</footer>
-	</div>
-	<script src="/js/spin.min.js"></script>
-	<script type="text/javascript">
+		function request_itinerary() {
+			$.ajax({
+				type: 'POST',
+				url: 'http://pennapps.cloudapp.net:8080/vacationinfo',
+				data: {'access_token': window.localStorage['auth_tok']},
+				success: function(response) {
+					console.log(response);
+					$(".load").fadeOut(500, function() {
+						spinner.stop();
+						$(".delay").fadeIn(500);
+					});
+				},
+				error: function(response, text_status) {
+					console.log(response);
+					$(".load").fadeOut(500, function() {
+						spinner.stop();
+						$(".error").fadeIn(500);
+					});
+				},
+				dataType: 'json'
+			});
+		}
+
+		// Start actual execution here
+		request_itinerary();
 
 		$(window).load(function() {
 			var opts = {
@@ -60,26 +55,38 @@
 			    left: 'auto' // Left position relative to parent in px
 			};
 			var target = document.getElementById('loading');
-			var spinner = new Spinner(opts).spin(target);
-
-			function show_data(response) {
-				console.log(response);
-				$(".load").fadeOut(500, function() {
-					spinner.stop();
-					$(".delay").fadeIn(500, function() {});
-				});
-
-			}
+			spinner = new Spinner(opts).spin(target);
 
 			$('#book-btn').click(function() {
 				// tell server to confirm registration
 				window.location.assign('/thanks');
 			});
 
-			$('#retry-btn').click(function() {
+			$('.retry').click(function() {
 				// send another request to server
+				request_itinerary();
 			});
 		});
 	</script>
+	<div id="wrapper">
+		<header>
+			<h1><a href="/">Facation</a></h1>
+			<h5 class="load">Generating your amazing vacation!</h5>
+		</header>
+		<section>
+			<div id="loading" class="load"></div>
+			<div class="delay">
+				<section id="trip-info"></section>
+				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another</button>
+			</div>
+			<div class="error">
+				<p>You don't really want to go on facation, do you? If you did, our server wouldn't have given you an error.</p>
+				<button class="retry">I'm sorry, I really do want a facation!</button>
+			</div>
+		</section>
+		<footer>
+			Using the Facebook API, Masherly (Hotwire), Azure, NYTimes, and more!
+		</footer>
+	</div>
 </body>
 </html>
