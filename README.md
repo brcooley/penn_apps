@@ -23,30 +23,15 @@ webpage with what is going to happen
 * mongo db to store logins and vacations (for time delay)
 * allow cancel vacations
 
-
-
----------------API--------------------
-masherly (hotwire)
-google search
-nytimes
-facebook
-mongoDB, pyMongo
-azure (hosting)
-filepicker.io (picture cropping)
-flickr
-twilio? (send fake texts; notify users about updates to their vacations)
-
-
 Desired features for mongoDB to interface with on Facebook:
-
--status updates
--wall posts
--like our own pictures
--album creation & picture uploading
--keep track of every creation, both so that it can be retroactively deleted,
+* status updates
+* wall posts
+* like our own pictures
+* album creation & picture uploading
+* keep track of every creation, both so that it can be retroactively deleted,
  and so that we can respond to comments or activity
 
--list of jobs, associated with timestamps for execution, with arguments (oauth tokens to jobs)
+* list of jobs, associated with timestamps for execution, with arguments (oauth tokens to jobs)
 * allow cancel vacations
 
 
