@@ -2,6 +2,7 @@ penn_apps
 =========
 
 Spring 2013 Penn Apps Repository
+https://www.hackerleague.org/hackathons/pennapps-spring-2013
 * Mike was here
 * so was Peter
 * NAthan too
@@ -32,9 +33,23 @@ mongo db to store logins and vacations (for time delay)
 
 ---------------API--------------------
 masherly (hotwire)
+google search
+nytimes
 facebook
-mongoDB
-azure? (hosting)
-filepicker.io? tumblr? (get social pictues)
+mongoDB, pyMongo
+azure (hosting)
+filepicker.io (picture cropping)
+flickr
 twilio? (send fake texts; notify users about updates to their vacations)
-nytimes (what book are you reading?)
+
+
+Desired features for mongoDB to interface with on Facebook:
+
+-status updates
+-wall posts
+-like our own pictures
+-album creation & picture uploading
+-keep track of every creation, both so that it can be retroactively deleted,
+ and so that we can respond to comments or activity
+
+-list of jobs, associated with timestamps for execution, with arguments (oauth tokens to jobs)

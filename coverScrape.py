@@ -21,12 +21,12 @@ book_list = b.get_list(genre)
 # hardcoded ------>  book_list[WHICH ENTRY][u 'book_details'][0][u'title']
 
 #print book_list[WHICH_ENTRY][u'book_details'][0][u'title']
-for book in book_list:
-   print book[u'book_details'][0][u'title']
+#for book in book_list:
+#   print book[u'book_details'][0][u'title']
 
 #select the entry
 WHICH_ENTRY = random.randint(0,len(book_list)-1)
-print WHICH_ENTRY
+#print WHICH_ENTRY
 title = book_list[WHICH_ENTRY][u'book_details'][0][u'title']
 
 ba = BookArt()
