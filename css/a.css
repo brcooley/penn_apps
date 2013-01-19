@@ -79,7 +79,8 @@ body {
   font: 62.5% "Open Sans", Tahoma, sans-serif;
   color: #dddddd;
   text-align: center;
-  background: url("http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg") no-repeat center center fixed;
+  background: no-repeat center center fixed;
+  background-image: url("http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg");
   background-size: cover; }
 
 a {
