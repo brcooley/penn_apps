@@ -31,6 +31,13 @@ h5 {
 	font-size: 1.2em;
 	font-weight: normal;
 }
+img {
+	display: inline-block;
+	margin: 10px;
+	text-align: left;
+	max-width: 640px;
+	border-radius: 6px;
+}
 header {
 	// margin: 20px 0;
 }
@@ -74,10 +81,14 @@ button {
 	width: 960px;
 	font-size: 1.4em;
 
-	background: rgba($bg, 0.5);
+	background: rgba($bg, 0.6);
 	border-radius: 10px;
 
 }
 #loading {
 	height: 200px;
+}
+#trip-info {
+	margin: 0 10px;
+	text-align: left;
 }
