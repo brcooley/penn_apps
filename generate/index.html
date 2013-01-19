@@ -8,9 +8,24 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
+	<script>
+		$.ajax({
+			type: 'POST',
+			url: 'http://pennapps.cloudapp.net:8080/vacationinfo',
+			data: {'access_token': window.localStorage['auth_tok']},
+			success: function(response) {
+				console.log(response);
+				$(".load").fadeOut(500, function() {
+					spinner.stop();
+					$(".delay").fadeIn(500, function() {});
+				});
+			},
+			dataType: 'json'
+		});
+	</script>
 	<div id="wrapper">
 		<header>
-			h1><a href="/">Facation</a></h1>
+			<h1><a href="/">Facation</a></h1>
 			<h5 class="load">Generating your amazing vacation!</h5>
 		</header>
 		<section>
@@ -47,13 +62,14 @@
 			var target = document.getElementById('loading');
 			var spinner = new Spinner(opts).spin(target);
 
-			setTimeout(function() {
+			function show_data(response) {
+				console.log(response);
 				$(".load").fadeOut(500, function() {
 					spinner.stop();
 					$(".delay").fadeIn(500, function() {});
 				});
 
-			}, 3000);
+			}
 
 			$('#book-btn').click(function() {
 				// tell server to confirm registration

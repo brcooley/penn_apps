@@ -22,22 +22,21 @@ def haversine(lat1, lon1, lat2, lon2):
     km = 6367 * c
     return km
 
-def main():
-    geo = getGeoInfo('158.130.102.99')
+
+with open('airports.dat') as f:
+    airports = (x.split('\t') for x in f.read().split('\n')[1:-1])
+def nearest_airport(ip):
+    global airports
+    geo = getGeoInfo(ip)
     lat = float(geo['latitude'])
     lon = float(geo['longitude'])
-    print 'lat:', lat
-    print 'long:', lon
 
-    with open('airports.dat') as f:
-        airports = (x.split('\t') for x in f.read().split('\n')[1:-1])
+    distances = \
+        ((haversine(lat, lon, float(entry[2]), float(entry[3])), \
+            entry)for entry in airports)
+    min_distance, nearest_airport = min(distances, key=lambda x: x[0])
+    return {
+        'airport': nearest_airport,
+        'distance': min_distance,
+        }
 
-    distances = (
-            (haversine(lat, lon, float(entry[2]), float(entry[3])), \
-                entry)for entry in airports)
-    min_distance, closest_airport = min(distances, key=lambda x: x[0])
-    print 'min distance: ', min_distance
-    print 'nearest airport:', closest_airport
-
-
-main()

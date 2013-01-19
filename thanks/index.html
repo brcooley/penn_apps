@@ -6,6 +6,15 @@
 	<title>Facation</title>
 	<link rel="stylesheet" href="/css/a.css" />
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+		$(window).load(function() {
+			var new_url = 'http://miriadna.com/desctopwalls/images/max/Through-mountain-ridge.jpg';
+			$("body").css('background-image', function() {
+				// console.log();
+				return 'url(' + new_url + ')';
+			});
+		});
+	</script>
 </head>
 <body>
 	<div id="wrapper">

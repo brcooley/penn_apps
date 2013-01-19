@@ -16,13 +16,13 @@
 import ConfigParser
 import multiprocessing.dummy as multiprocessing # Use threads.
 import os
-import requests
 import sys
 import time
 import urllib
 
 import daemon
 import facebook
+import requests
 import pymongo
 
 
@@ -76,16 +76,6 @@ def execute_job(job):
         id_key = 'post_id'
     # Apply the action and get the facebook id.
     action_id = func(*args, **kwargs)[id_key]
-    db.posts.up
-
-
-def extend_token(access_token):
-    url = ('https://graph.facebook.com/oauth/access_token?' + \
-        'grant_type=fb_exchange_token&' \
-        'client_id=%s&' \
-        'client_secret=%s&' \
-        'fb_exchange_token=%s') % (app_id, app_secret, access_token)
-    print requests.get(url).text
 
 
 def create_album(graph, name):
@@ -109,20 +99,20 @@ def main():
     finally:
         conn.close()
 
-
+config = ConfigParser.RawConfigParser()
+try:
+    with open(os.path.expanduser('~/.facationd.conf')) as f:
+        config.readfp(f)
+    app_id = config.get('facationd', 'app_id')
+    app_secret = config.get('facationd', 'app_secret')
+    assert app_id and app_secret
+except AssertionError:
+    print 'config needs keys app_id and app_secret under [facationd]'
+except IOError:
+    print 'missing config file ~/.facationd.conf'
+ 
 if __name__ == '__main__':
     usage = 'Usage: %s [test|start|status]' % sys.argv[0]
-    config = ConfigParser.RawConfigParser()
-    try:
-        with open(os.path.expanduser('~/.facationd.conf')) as f:
-            config.readfp(f)
-        app_id = config.get('facationd', 'app_id')
-        app_secret = config.get('facationd', 'app_secret')
-        assert app_id and app_secret
-    except AssertionError:
-        print 'config needs keys app_id and app_secret under [facationd]'
-    except IOError:
-        print 'missing config file ~/.facationd.conf'
     if len(sys.argv) < 2:
         print usage
     elif sys.argv[1] == 'test':
