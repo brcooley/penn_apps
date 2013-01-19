@@ -26,6 +26,7 @@ class vacation_info:
         print web.data()
         location = choose_location() 
         ip_address = web.ctx.ip
+        web.header('Content-Type', 'application/json')
         return json.dumps({
             'location': location,
             'photos': None,
