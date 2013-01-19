@@ -10,8 +10,21 @@
 </head>
 <body>
 	<script>
+		function randInt(min, max) {
+ 			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
 		function add_content (data) {
-			$('.location').html(data.location);	
+
+			rand_photo = data.photos[randInt(0,data.photos.length-1)];
+
+			$('.location').html(data.location);
+			$('.trip-length').html(data.length);
+			$('.loc-img').html('<img src=' + rand_photo + ' />');
+			window.localStorage['bg-img'] = rand_photo;
+			if (data.hotels) {
+				$('.hotel').html(data.hotels['name']);
+			}
 		}
 
 		function request_itinerary() {
@@ -86,7 +99,8 @@
 			<div id="loading" class="load"></div>
 			<div class="delay">
 				<section id="trip-info">
-					For your amazing Facation, you will be flying to fabulous <span class="location"></span>!
+					<p>For your amazing Facation, you will be flying to fabulous <span class="location"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
+					<p>You will be staying in the glamorous <span class="hotel"></span>, 
 				</section>
 				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another</button>
 			</div>
