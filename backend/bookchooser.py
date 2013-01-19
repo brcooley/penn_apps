@@ -37,5 +37,5 @@ def select_book():
             break
     return {
         'title': title.title(),
-        'cover_image': url,
+        'photo': url,
         }
