@@ -23,18 +23,15 @@ import facebook
 import pymongo
 
 
-'''
-# Retrieve this from db, should probably be received
-# from the clientside Facebook Login javascript API
-access_token = None
-
-graph = facebook.GraphAPI(access_token)
-print graph.get_object('me')
-'''
-
 pidfile_path = '/var/run/pennapps.pid'
 update_interval = 60
 num_processes = 4
+
+
+debug = True
+def debug(mesg):
+    if debug:
+        print 'debug: ' + mesg
 
 
 def read_pidfile():
@@ -49,18 +46,37 @@ def write_pidfile():
 
 def read_jobs():
     '''Read jobs that are ready to be executed.'''
+    debug('reading jobs (although not really yet)')
     return []
 
 
-def execute_job():
-    pass
+def execute_job(access_token, *args):
+    graph = facebook.GraphAPI(access_token)
+
+    # put_wall_post: message, attachment={}, profile_id="me"
+    if args[0] == 'put_wall_post':
+        post_id =  graph.put_wall_post()['id']
+        # maybe store it
+        
+    # put_photo: image, message=None, album_id=None
+    elif args[0] == 'post_photo':
+        album_id = None # get the album_id
+        post_id = graph.put_photo('me', message, album_id)
+        # maybe store it
+
+
+def create_album(graph, name):
+    return graph.put_object('me', 'albums', name=name)['id']
 
 
 def main():
     pool = multiprocessing.Pool(processes=num_processes)
     while True:
+        debug('reading and executing jobs asynchronously')
         pool.apply_async(execute_job, read_jobs())
+        debug('sleeping %d seconds' % update_interval)
         time.sleep(update_interval)
+        break
 
 
 if __name__ == '__main__':
