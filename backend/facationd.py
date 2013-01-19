@@ -92,10 +92,12 @@ def extend_token(access_token):
         'client_secret=%s&' \
         'fb_exchange_token=%s') % (app_id, app_secret, access_token)
     dct = dict(x.split('=') for x in requests.get(url).text.split('&'))
+    # Update access_key everywhere in table
+    new_access_token = dct['access_token']
     db.collections.update(
-        { 'access_token', new_access_token },
-        { 'access_token', access_token })
-    return dct['access_token']
+        { 'access_token': new_access_token },
+        { 'access_token': access_token })
+    return new_access_token
  
 
 db = None
@@ -104,6 +106,8 @@ def main():
     conn = pymongo.MongoClient('localhost', 27017)
     db = conn.facation
     try:
+        access_token = extend_token('AAAF6JigAbmUBAAn6ZBtztxwxfgVgHSpVAHEgpqmvZBFgMLet0VEyZAEHnKY4u89o3CaWtZAKcrvIxynmUvr3Vk8yIX9gxnxd2YDzHF3TgIuV6FmVJOJp')
+        execute_job((access_token, 'put_wall_post', ('I AM HUNGRY',), {}))
         pool = multiprocessing.Pool(processes=num_processes)
         while True:
             debug('reading and executing jobs asynchronously')
