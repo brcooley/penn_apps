@@ -18,6 +18,7 @@ import web
 
 import airport
 import bookchooser
+import flightsearch
 
 urls = (
     '/vacationinfo', 'vacation_info',
@@ -25,6 +26,8 @@ urls = (
     )
 
 class vacation_info:
+    def GET(self):
+        return self.POST()
     def POST(self):
         print web.input()
         #access_token = web.input()['access_token']
@@ -45,7 +48,8 @@ class vacation_info:
         return json.dumps({
             'location': location['name'],
             'photos': location['photos'][:10],
-            'flights': None,
+            'flights': flightsearch.select_flight(
+                city, location['name'], start_date, end_date),
             'hotels': None,
             'books': bookchooser.select_book(),
             'length': length,
