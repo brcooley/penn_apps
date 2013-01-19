@@ -3,8 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<!-- <meta name="author" content="Brett Cooley" /> -->
-	<title>Face-cation</title>
+	<title>Facation</title>
 	<link rel="stylesheet" href="/css/a.css" />
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
 	<div id="fb-root"></div>
@@ -22,7 +23,7 @@
 	    	console.log('Got login status: ' + response.authResponse.accessToken);
 		    if (response.status === 'connected') {
 		        // connected
-		        testAPI();
+		        // testAPI();
   		    } else if (response.status === 'not_authorized') {
 		    	// not_authorized
 			    login();
@@ -37,10 +38,11 @@
 	};
 
 	function login() {
+		console.log("Initiating login");
 	    FB.login(function(response) {
 	        if (response.authResponse) {
 	            // connected
-	            testAPI();
+	            // testAPI();
 	        } else {
 	            // cancelled
 	        }
@@ -64,20 +66,23 @@
 	     ref.parentNode.insertBefore(js, ref);
 	 }(document));
 
-	document.getElementById('login-btn').onclick(login());
 	</script>
 	<div id="wrapper">
 		<header>
-			<h1>Face-cation</h1>
+			<h1>Facation</h1>
 			<h5>Life too stressful?  Take a "vacation" and let us keep your Facebook friends up to date on your adventures!</h5>
 		</header>
 		<section>
-			Login With Facebook
-			<button id="login-btn">GO!</button>
+			<button id="login-btn">Login With Facebook</button>
 		</section>
 		<footer>
-			Facebook API, Masherly (Hotwire), Wego (Flights), Azure, NYTimes, and more!
+			Using the Facebook API, Masherly (Hotwire), Wego (Flights), Azure, NYTimes, and more!
 		</footer>
 	</div>
+	<script>
+		$('#login-btn').click(function() {
+			login();
+		});
+	</script>
 </body>
 </html>

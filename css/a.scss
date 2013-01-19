@@ -5,13 +5,49 @@ body {
 	font: 62.5% $sans;
 	color: $fg;
 	text-align: center;
+
+	background-image: url('http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg');
+	background-size: cover;
+}
+h1 {
+	font-size: 2em;
+	text-transform: uppercase;
+}
+header {
+	// margin: 20px 0;
 }
 
 // ID //
 #wrapper {
-	width: 100%;
-	height: 780px;
-	background-image: url('http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg');
-	// background-size: 100% 100%;
-	background-size: cover;
+	margin: 10px auto;
+	padding: 10px;
+	width: 960px;
+	font-size: 1.4em;
+
+	background: rgba($bg, 0.5);
+	border-radius: 10px;
+
+}
+#login-btn {
+	margin: 20px 0;
+	padding: 10px;
+
+	color: $fg;
+	background: $fb-blue;
+
+	font-size: 1.4em;
+	font-weight: bold;
+	border: 1px solid darken($fb-blue, 20%);
+	border-radius: 6px;
+
+	@include transition("background .5s ease, border .5s ease");
+
+	&:hover {
+		@include transition("background .5s ease, border .5s ease");
+		cursor: pointer;
+		background: darken($fb-blue, 10%);
+
+		border-color: $fb-blue;
+
+	}
 }

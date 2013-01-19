@@ -78,10 +78,40 @@ input, select {
 body {
   font: 62.5% "Open Sans", Tahoma, sans-serif;
   color: #dddddd;
-  text-align: center; }
-
-#wrapper {
-  width: 100%;
-  height: 780px;
+  text-align: center;
   background-image: url("http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg");
   background-size: cover; }
+
+h1 {
+  font-size: 2em;
+  text-transform: uppercase; }
+
+#wrapper {
+  margin: 10px auto;
+  padding: 10px;
+  width: 960px;
+  font-size: 1.4em;
+  background: rgba(34, 34, 34, 0.5);
+  border-radius: 10px; }
+
+#login-btn {
+  margin: 20px 0;
+  padding: 10px;
+  color: #dddddd;
+  background: #3b5998;
+  font-size: 1.4em;
+  font-weight: bold;
+  border: 1px solid #1e2e4f;
+  border-radius: 6px;
+  -webkit-transition: background .5s ease, border .5s ease;
+  -moz-transition: background .5s ease, border .5s ease;
+  -o-transition: background .5s ease, border .5s ease;
+  transition: background .5s ease, border .5s ease; }
+  #login-btn:hover {
+    -webkit-transition: background .5s ease, border .5s ease;
+    -moz-transition: background .5s ease, border .5s ease;
+    -o-transition: background .5s ease, border .5s ease;
+    transition: background .5s ease, border .5s ease;
+    cursor: pointer;
+    background: #2d4373;
+    border-color: #3b5998; }
