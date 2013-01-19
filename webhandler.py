@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 take access_token ip
     return random location, pictures, flight info, hotel
@@ -14,6 +15,7 @@ import pymongo
 import requests
 import web
 
+
 urls = (
         '/vacationinfo', 'vacation_info',
     )
@@ -26,6 +28,7 @@ class vacation_info:
         print web.data()
         location = choose_location() 
         ip_address = web.ctx.ip
+        web.header('Access-Control-Allow-Origin', '*')
         web.header('Content-Type', 'application/json')
         return json.dumps({
             'location': location,
