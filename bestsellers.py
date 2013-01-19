@@ -44,3 +44,4 @@ class BestSellers:
 
         j = simplejson.loads(r.content)
         return j[u'results']
+
