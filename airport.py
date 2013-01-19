@@ -1,29 +1,43 @@
 import json, requests, urllib
 import csv
-import math
+from math import radians, cos, sin, asin, sqrt
 
 def getGeoInfo( ip ):
     url = "http://freegeoip.net/json/" + str(ip)
     result = requests.get(url)
     return result.json()
 
-def distance( x1 , y1 , x2 , y2 ):
-   return  math.sqrt(math.abs((x1-x2)**2 + (y1-y2)**2))
+def haversine(lat1, lon1, lat2, lon2):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    km = 6367 * c
+    return km
 
 def main():
     geo = getGeoInfo('158.130.102.99')
-    lat = geo['latitude']
-    lon = geo['longitude']
-    print "lat:  "+ lat
-    print 'long: ' + lon
-    airports = csv.DictReader('airports.dat')
-    #minDistance = min([distance(lat, lon, entry['LATITUDE'], entry['LONGITITUDE']) for entry in airports])
-    #print "min distance: " +  minDistance
+    lat = float(geo['latitude'])
+    lon = float(geo['longitude'])
+    print 'lat:', lat
+    print 'long:', lon
 
-    distances = (distance(lat, lon, entry['LATITUDE'], \
-            entry['LONGITUDE']) for entry in airports)
-    min_distance = min(zip(distances, airports), key=lambda x: x[0])
+    with open('airports.dat') as f:
+        airports = (x.split('\t') for x in f.read().split('\n')[1:-1])
+
+    distances = (
+            (haversine(lat, lon, float(entry[2]), float(entry[3])), \
+                entry)for entry in airports)
+    min_distance, closest_airport = min(distances, key=lambda x: x[0])
     print 'min distance: ', min_distance
+    print 'nearest airport:', closest_airport
 
 
 main()
