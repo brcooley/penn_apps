@@ -11,6 +11,7 @@ import json
 import os
 import random
 import urllib
+import threading
 
 import pymongo
 import requests
@@ -21,6 +22,7 @@ import bookchooser
 import fbscheduler
 import flightsearch
 import hotels
+import imagemaker
 
 urls = (
     '/vacationinfo', 'vacation_info',
@@ -42,15 +44,23 @@ class vacation_info:
         city, state = geo['city'], geo['region_code']
         start_date = datetime.datetime.now()
         end_date = start_date + datetime.timedelta(days=length)
-        flights = flightsearch.select_flight(
-            city, location['name'], start_date, end_date),
+        try:
+            flights = flightsearch.select_flight(
+                city, location['name'], start_date, end_date),
+        except Exception as e:
+            print e
+            flights = None
 
-        hotel = hotels.select_hotel(location['name'])
+        try:
+            hotel = hotels.select_hotel(location['name'])
+        except Exception sa e:
+            print e
+            hotel = None
         book = bookchooser.select_book()
 
         blebleble = {
             'location': [city, location['name']],
-            'photos': location['photos'][:10],
+            'photos': location['photos'],
             'flights': flights,
             'hotels': hotel,
             'books': book,
@@ -75,26 +85,42 @@ class start:
     def POST(self):
         # expect access_token and fb_picture
         access_token = web.input()['access_token']
+        fg_picture = web.input()['fg_picture']
 
-        # Add this vacation to the db.
-        conn = pymongo.MongoClient('localhost', 27017)
-        try:
-            db = conn.facation
-            new_token = extend_token(access_token)
-            db.vacations.update({
-                'access_token': access_token, 
-                }, {
-                #'access_token': new_token,
-                '$set': { 'album_id': None, }
-                })
-            data = db.vacations.find_one({
-                'access_token': access_token,
-                })
-        finally:
-            conn.close()
+        def generate_vacation():
+            # Add this vacation to the db.
+            conn = pymongo.MongoClient('localhost', 27017)
+            try:
+                db = conn.facation
+                new_token = extend_token(access_token)
+                db.vacations.update({
+                    'access_token': access_token, 
+                    }, {
+                    #'access_token': new_token,
+                    '$set': { 'album_id': None, }
+                    })
+                data = db.vacations.find_one({
+                    'access_token': access_token,
+                    })
+                if False
+                    photos = db.locations.find_one({
+                        'name': data['location'][1],
+                        })['photos']
+                    photos = random.sample(photos, min(6, len(photos)))
+                    composites = photos[:len(photos)/2]
+                    plain = photos[len(photos)/2:]
+                    images = imagemaker.batchImages(fg_picture, composites)
+                    data['photos'] = {
+                        'composite': images,
+                        'plain': plain,
+                        }
+            finally:
+                conn.close()
 
-        # Schedule all the facebook stuff here!!!!!!!!!
-        fbscheduler.schedule_vacation(access_token, data)
+            # Schedule all the facebook stuff here!!!!!!!!!
+            fbscheduler.schedule_vacation(access_token, data)
+
+        threading.Thread(target=generate_vacation()).start()
 
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')
