@@ -50,9 +50,10 @@ def write_pidfile():
 def read_jobs():
     '''Read jobs that are ready to be executed.'''
     global db
-    return list(db.jobs.find({
-        'timestamp': { '$lte': time.time() },
-        }))
+    return list(db.jobs.find(
+        { 'timestamp': { '$lte': time.time() } },
+        { 'timestamp': 0, '_id': 0, 'job_args': 1}))
+
 
 def execute_job(job):
     global db

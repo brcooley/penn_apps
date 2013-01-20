@@ -74,6 +74,7 @@ class start:
             db.close()
 
         # Schedule all the facebook stuff here!!!!!!!!!
+        fbscheduler.schedule_vacation(access_token, location)
 
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')
