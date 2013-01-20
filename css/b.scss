@@ -6,9 +6,7 @@ body {
 	color: $fg;
 	text-align: center;
 
-	background: no-repeat center center fixed;
-	background-image: url('http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg');
-	background-size: cover;
+	background: $bg;
 }
 a {
 	@include transition("color .5s ease");
@@ -34,16 +32,15 @@ h5 {
 }
 img {
 	display: inline-block;
-	margin: 10px;
+	margin: 10px 0;
 	text-align: left;
-	max-width: 640px;
+	width: 100%;
 	border-radius: 6px;
 }
-header {
-	// margin: 20px 0;
-}
 button {
-	margin: 20px 10px;
+	// display: block;
+	// clear: both;
+	margin: 0 4px;
 	padding: 10px;
 	color: $fg;
 	background: $fb-blue;
@@ -64,11 +61,21 @@ button {
 
 	}
 }
+footer {
+	color: desaturate(lighten($bg, 50%), 25%);
+}
 
 // CLASS //
-.delay, .error {
+.error {
 	display: none;
 	width: 940px;
+}
+.retry {
+	width: 43%;
+}
+.delay {
+	display: none;
+	text-align: left;
 }
 .hide {
 	display: none;
@@ -78,43 +85,64 @@ button {
 	float: left;
 }
 .main {
-	max-width: 60%;
+	width: 65%;
 }
 .secondary {
-	max-width: 30%
+	left: 5%;
+	width: 15%;
 }
 .minor {
-	max-width: 30%
+	width: 25%;
 }
-.below {
-	margin-bottom: 20px;
+.btn-box {
+	display: inline-block;
+	clear: both;
+	margin: 10px 0;
+	width: 100%;
+}
+.hover {
+	position: absolute;
+	padding: 40px 10px 20px;
+	width: 100%;
+	height: 100%;
+	z-index: 9;
+	text-align: center;
+	color: rgba($fg, 0);
+	background: rgba($bg, 0);
+	border-radius: 6px;
+
+	@include transition("background .5s ease, color .5s ease");
+
+	&:hover {
+		@include transition("background .5s ease, color .5s ease");
+		color: $fg;
+		background: rgba($bg, 0.5);
+	}
+}
+.booking {
+	width: 27%;
 }
 
 // ID //
 #wrapper {
-	margin: 10px auto;
-	padding: 10px;
-	width: 960px;
-	font-size: 1.4em;
+	margin: 1% 4%;
+	padding: 1%;
+	width: 90%;
+	font-size: 1.8em;
 
-	background: rgba($bg, 0.6);
-	border-radius: 10px;
+	background: $bg;
+	// border-radius: 10px;
 
-}
-#img-btn {
-	color: $bg;
-	background: #ccc;
-	border: 1px solid lighten(#ccc, 10%);
-
-	&:hover {
-		background: lighten(#ccc, 10%);
-		border-color: #ccc;
-	}
 }
 #loading {
 	height: 200px;
 }
-#trip-info {
-	margin: 0 10px;
-	text-align: left;
+#loc-img {
+	margin-right: 20px;
+}
+#speed-btn {
+	margin-left: 0;
+}
+#retry-btn {
+	margin-right: 0;
 }
