@@ -61,25 +61,26 @@ def execute_job(_id, job):
     global db
     access_token, action, args, kwargs = job
     graph = facebook.GraphAPI(access_token)
-    print action
+    #print action
     if action == 'put_wall_post':
         graph.put_wall_post(*args, **kwargs)
     elif action == 'put_photo':
-        result = db.vacations.find_one({
-            'access_token': access_token,
-            })
-        location, album_id = result['location'][1], result['album_id']
-        if album_id is None:
-            album_name = 'Awesome %s Photos! :D' % location
-            album_id = str(create_album(graph, album_name))
-            db.vacations.update({
-                'access_token': access_token,
-                }, {
-                'album_id': album_id,
-                })
+        #result = db.vacations.find_one({
+        #    'access_token': access_token,
+        #    })
+        #print access_token
+        #location, album_id = result['location'][1], result['album_id']
+        #if album_id is None:
+        #    album_name = 'Awesome %s Photos! :D' % location
+        #    album_id = str(create_album(graph, album_name))
+        #    db.vacations.update({
+        #        'access_token': access_token,
+        #        }, {
+        #            '$set': {'album_id': album_id},
+        #        }, False, True)
         imgdata = requests.get(args[0])
-        graph.put_photo(io.BytesIO(imgdata.content), args[1], \
-                album_id=str(album_id))
+        graph.put_photo(io.BytesIO(imgdata.content), args[1])
+        #        album_id=str(album_id))
     #elif action == 'checkin':
     #    data = graph.get_object('search?q=%s&type=place' % \
     #            urllib.quote(args[0]))
