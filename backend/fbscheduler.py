@@ -30,14 +30,14 @@ def _schedule_vacation(db, access_token, location):
 
     # Post a status at 7pm on Jan 23
     timestamp = datetime(2013, 1, 23, 19)
-    schedule_job(db, access_token, timestamp, 'Hello, world!')
+    schedule_job(db, access_token, timestamp, 'put_wall_post', 'Hello, world!')
 
     # Post a picture at in 3 days and 7 hours from now
     timestamp = datetime.now() + timedelta(days=3, hours=7)
     schedule_job(db, access_token, timestamp, 'put_photo', url, 'Caption!')
     '''
     timestamp = datetime(2013, 1, 19, 15)
-    schedule_job(db, access_token, timestamp, "Hello, world!")
+    schedule_job(db, access_token, timestamp, 'put_wall_post', "Hello, world!")
 
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
