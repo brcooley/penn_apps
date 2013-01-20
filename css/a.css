@@ -100,6 +100,7 @@ a {
 
 h1 {
   font-size: 4em;
+  font-family: 'Artifika';
   text-transform: uppercase; }
 
 h5 {
@@ -162,6 +163,11 @@ button {
   font-size: 1.4em;
   background: rgba(34, 34, 34, 0.6);
   border-radius: 10px; }
+
+#photo-btn {
+  color: #222222;
+  background: #ccc;
+  border: 1px solid #b3b3b3; }
 
 #loading {
   height: 200px; }
