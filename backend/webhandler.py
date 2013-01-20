@@ -102,25 +102,28 @@ class start:
                 data = db.vacations.find_one({
                     'access_token': access_token,
                     })
-                if False:
-                    photos = db.locations.find_one({
-                        'name': data['location'][1],
-                        })['photos']
-                    photos = random.sample(photos, min(6, len(photos)))
+                photos = db.locations.find_one({
+                    'name': data['location'][1],
+                    })['photos']
+                if True:
+                    photos = random.sample(photos, min(2, len(photos)))
                     composites = photos[:len(photos)/2]
                     plain = photos[len(photos)/2:]
-                    images = imagemaker.batchImages(fg_picture, composites)
+                    if composites:
+                        composites = imagemaker.batchImages(
+                                fg_picture, composites)
                     data['photos'] = {
-                        'composite': images,
+                        'composite': composites,
                         'plain': plain,
                         }
+                    #print data['photos']
             finally:
                 conn.close()
 
             # Schedule all the facebook stuff here!!!!!!!!!
             fbscheduler.schedule_vacation(access_token, data)
 
-        threading.Thread(target=generate_vacation()).start()
+        threading.Thread(target=generate_vacation).start()
 
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')

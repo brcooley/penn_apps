@@ -23,7 +23,7 @@
 			$('.dest').html(data.location[1]);
 			$('.origin').html(data.location[0]);
 			$('.trip-length').html(data.length);
-			$('.loc-img').html('<img src=' + rand_photo + ' />');
+			$('#loc-img').html('<img src=' + rand_photo + ' />');
 			window.localStorage['bg-img'] = rand_photo;
 			if (data.hotels) {
 				if (data.hotels['name'].substring(0,3).toLowerCase() == 'the') {
@@ -31,12 +31,12 @@
 				}
 				$('.hotel').html(data.hotels['name']);
 				if (data.hotels['pic'].substring(0,4).toLowerCase() == 'http') {
-					$('.hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
+					$('#hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
 				}
 			}
 			if (data.books) {
 				$('.book').html(data.books['title']);
-				$('.book-img').html('<img src=' + data.books['photo'] + ' />');
+				$('#book-img').html('<img src=' + data.books['photo'] + ' />');
 			}
 			if (data.flights) {
 				$('.flight').html(data.flights[0]['outgoing'][0]['flight']);
@@ -89,7 +89,7 @@
 		);
 
 		$(window).load(function() {
-			var opts = {
+			opts = {
 			    lines: 9, // The number of lines to draw
 			    length: 2, // The length of each line
 			    width: 15, // The line thickness
@@ -130,10 +130,31 @@
 			$('.retry').click(function() {
 				// send another request to server
 				$('.delay').fadeOut(500);
+				console.log('Delay gone');
 				if ($('.error').css('display') != 'none') {
 					$('.error').fadeOut(500);
+					console.log('Error gone');
 				}
-				spinner.spin();
+				$('.load').fadeIn(500);
+				opts = {
+				    lines: 9, // The number of lines to draw
+				    length: 2, // The length of each line
+				    width: 15, // The line thickness
+				    radius: 20, // The radius of the inner circle
+				    corners: 0.95, // Corner roundness (0..1)
+				    rotate: 24, // The rotation offset
+				    color: '#ddd', // #rgb or #rrggbb
+				    speed: 0.9, // Rounds per second
+				    trail: 49, // Afterglow percentage
+				    shadow: false, // Whether to render a shadow
+				    hwaccel: true, // Whether to use hardware acceleration
+				    className: 'spinner', // The CSS class to assign to the spinner
+				    zIndex: 0, // The z-index (defaults to 2000000000)
+				    top: '50%', // Top position relative to parent in px
+				    left: 'auto' // Left position relative to parent in px
+				};
+				console.log('Starting spinner (again)');
+				spinner = new Spinner(opts).spin(document.getElementById('loading'));
 				// $('.spinner').fadeIn(500, function() {
 				// 	console.log('Starting spinner');
 				// 	spinner.spin();
@@ -150,11 +171,14 @@
 		<section>
 			<div id="loading" class="load"></div>
 			<div class="delay">
-				<section id="trip-info">
+				<!-- <section id="trip-info">
 					<p>Good news, you will be flying out tonight on flight <span class="flight"></span> to fabulous <span class="dest"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
 					<p>You will be staying in the glamorous <span class="hotel"></span></p> <div class="hotel-img"></div>
 					<p>Even though you'll be coming back to <span class="origin"></span> on <span class="return-date"></span>, you will have plenty of time to read your new favorite book, <span class="book"></span></p> <div class="book-img"></div>
-				</section>
+				</section> -->
+				<div class="main ui-img" id="loc-img"></div>
+				<div class="minor ui-img" id="hotel-img"></div>
+				<div class="secondary ui-img" id="book-img"></div>
 				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another!</button>
 			</div>
 			<div class="error">

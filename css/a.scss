@@ -70,6 +70,19 @@ button {
 	// visibility: hidden;
 	width: 940px;
 }
+.ui-img {
+	position: relative;
+	float: left;
+}
+.main {
+	max-width: 60%;
+}
+.secondary {
+	max-width: 30%
+}
+.minor {
+	max-width: 30%
+}
 .below {
 	margin-bottom: 20px;
 }
