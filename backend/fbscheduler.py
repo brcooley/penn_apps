@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 import pymongo
 
-api_key = 'AAAF6JigAbmUBAAn6ZBtztxwxfgVgHSpVAHEgpqmvZBFgMLet0VEyZAEHnKY4u89o3CaWtZAKcrvIxynmUvr3Vk8yIX9gxnxd2YDzHF3TgIuV6FmVJOJp'
+api_key = 'AAAF6JigAbmUBAL7kOw8h1ujvcuGIQvX8BWFng4NkyXyWGZBDrWMKHqHSGP8ccqgAZBjWVRXlSDQdeCh2iaoaP521ygZBHIuDlzIvTGrZAhXVyil521QC'
 
 def schedule_vacation(access_token, location):
     '''Mike and Nathan look at _schedule_vacation instead!'''
