@@ -191,7 +191,7 @@ footer {
     -o-transition: background .5s ease, color .5s ease;
     transition: background .5s ease, color .5s ease;
     color: #dddddd;
-    background: rgba(34, 34, 34, 0.5); }
+    background: rgba(34, 34, 34, 0.7); }
 
 .booking {
   width: 27%; }
