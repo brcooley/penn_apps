@@ -25,6 +25,12 @@
 			if (data.hotels) {
 				$('.hotel').html(data.hotels['name']);
 			}
+			if (data.books) {
+				$('.book').html(data.books['name']);
+			}
+			if (data.flights) {
+				$('.flight').html(data.flights['outgoing'][0][0]['num'])
+			}
 		}
 
 		function request_itinerary() {
@@ -52,7 +58,24 @@
 		}
 
 		// Start actual execution here
+		
+		// Filepicker.io library load
+		(function(a){if(window.filepicker){return}var b=a.createElement("script");b.type="text/javascript";b.async=!0;b.src=("https:"===a.location.protocol?"https:":"http:")+"//api.filepicker.io/v1/filepicker.js";var c=a.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);var d={};d._queue=[];var e="pick,pickMultiple,pickAndStore,read,write,writeUrl,export,convert,store,storeUrl,remove,stat,setKey,constructWidget,makeDropPane".split(",");var f=function(a,b){return function(){b.push([a,arguments])}};for(var g=0;g<e.length;g++){d[e[g]]=f(e[g],d._queue)}window.filepicker=d})(document); 
+
+		filepicker.setKey('APByo0uftQkuGfVelfxqbz');
+	
 		request_itinerary();
+		filepicker.pick({
+				mimetype: 'image/*',
+		    	services:['COMPUTER', 'FACEBOOK', 'GMAIL', 'WEBCAM'],
+			},
+			function(FPFile){
+				fg_picture = FPFile.url;
+			},
+			function(FPError){
+				console.log(FPError.toString());
+			}
+		);
 
 		$(window).load(function() {
 			var opts = {
@@ -68,7 +91,7 @@
 			    shadow: false, // Whether to render a shadow
 			    hwaccel: true, // Whether to use hardware acceleration
 			    className: 'spinner', // The CSS class to assign to the spinner
-			    // zIndex: 2e9, // The z-index (defaults to 2000000000)
+			    zIndex: 0, // The z-index (defaults to 2000000000)
 			    top: '50%', // Top position relative to parent in px
 			    left: 'auto' // Left position relative to parent in px
 			};
@@ -77,7 +100,19 @@
 
 			$('#book-btn').click(function() {
 				// tell server to confirm registration
-				window.location.assign('/thanks');
+				$.ajax({
+					type: 'POST',
+					url: 'http://pennapps.cloudapp.net:8080/start',
+					data: {'access_token': window.localStorage['auth_tok'], 'fg_picture': fg_picture},
+					success: function (response) {
+						window.location.assign('/thanks');
+					},
+					error: function (response) {
+						
+					},
+					dataType: 'json'
+				});
+				// window.location.assign('/thanks');
 			});
 
 			$('.retry').click(function() {
@@ -99,8 +134,8 @@
 			<div id="loading" class="load"></div>
 			<div class="delay">
 				<section id="trip-info">
-					<p>For your amazing Facation, you will be flying to fabulous <span class="location"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
-					<p>You will be staying in the glamorous <span class="hotel"></span>, 
+					<p>For your amazing Facation, you will be flying to fabulous <span class="location"></span>! for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
+					<p>You will be staying in the glamorous <span class="hotel"></span>, sipping on a <span class='drink'></span> and reading your new favorite book, <span clas="book"></span> 
 				</section>
 				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another</button>
 			</div>
