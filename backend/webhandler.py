@@ -55,7 +55,7 @@ class vacation_info:
             hotel = hotels.select_hotel(location['name'])
         except Exception as e:
             print e
-	
+
         hotel = {
             'name': 'An exclusive 5-star resort',
             'pic': 'http://images.theage.com.au/2010/04/26/1382672/Hotel_Generic-420x0.jpg'
