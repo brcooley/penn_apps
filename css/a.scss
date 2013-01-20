@@ -99,10 +99,15 @@ button {
 	border-radius: 10px;
 
 }
-#photo-btn {
+#img-btn {
 	color: $bg;
 	background: #ccc;
 	border: 1px solid darken(#ccc, 10%);
+
+	&:hover {
+		background: darken(#ccc, 10%);
+		border-color: #ccc;
+	}
 }
 #loading {
 	height: 200px;

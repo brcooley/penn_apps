@@ -48,7 +48,7 @@ class FlashFoto:
 
         # There was an API error
         if response.status != 200:
-            print "API error: "+ response.status
+            print "API error: ", response.status
             data = json.loads(data)
             raise FlashFotoException(data['code'], data['message'])
         # Return a valid response
