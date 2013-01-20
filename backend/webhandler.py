@@ -18,6 +18,7 @@ import web
 
 import airport
 import bookchooser
+import fbscheduler
 import flightsearch
 import hotels
 
@@ -30,8 +31,7 @@ class vacation_info:
     def GET(self):
         return self.POST()
     def POST(self):
-        print web.input()
-        #access_token = web.input()['access_token']
+        access_token = web.input()['access_token']
 
         # Location and length of trip.
         location = rand_location() 
@@ -42,6 +42,19 @@ class vacation_info:
         city, state = geo['city'], geo['region_code']
         start_date = datetime.datetime.now()
         end_date = start_date + datetime.timedelta(days=length)
+        flights = flightsearch.select_flight(
+            city, location['name'], start_date, end_date),
+
+        hotel = hotels.select_hotel(location['name'])
+        book = bookchooser.select_book()
+
+        conn = pymongo.MongoClient('localhost', 27017)
+        try:
+            db = conn.facation
+            db.vacations.insert({
+                })
+        finally:
+            conn.close()
 
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')
@@ -49,24 +62,25 @@ class vacation_info:
         return json.dumps({
             'location': location['name'],
             'photos': location['photos'][:10],
-            'flights': flightsearch.select_flight(
-                city, location['name'], start_date, end_date),
-            'hotels': hotels.select_hotel(location['name']),
-            'books': bookchooser.select_book(),
+            'flights': flights,
+            'hotels': hotel,
+            'books': book,
             'length': length,
             })
 
 class start:
     def POST(self):
-        # expect access_token and location
+        # expect access_token and fb_picture
         locals().update(web.input())
 
         # Add this vacation to the db.
         conn = pymongo.MongoClient('localhost', 27017)
         try:
             db = conn.facation
-            db.vacations.insert({
-                'access_token': access_token,
+            db.vacations.update({
+                'access_token': access_token, 
+                }, {
+                'access_token': extend_token(access_token),
                 'location': location,
                 'album_id': None
                 })
@@ -90,6 +104,25 @@ def rand_location():
             {}, {'name': 1, 'photos': 1, '_id': 0})))
     finally:
         conn.close()
+
+
+def extend_token(access_token):
+    url = ('https://graph.facebook.com/oauth/access_token?' + \
+        'grant_type=fb_exchange_token&' \
+        'client_id=%s&' \
+        'client_secret=%s&' \
+        'fb_exchange_token=%s') % (app_id, app_secret, access_token)
+    t = requests.get(url).text
+    #print t
+    dct = dict(x.split('=') for x in t.split('&'))
+    new_access_token = dct['access_token']
+    # Update access_key everywhere in table
+    #db.collections.update(
+    #    { 'access_token': new_access_token },
+    #    { 'access_token': access_token })
+    return new_access_token
+ 
+
 
 
 if __name__ == '__main__':
