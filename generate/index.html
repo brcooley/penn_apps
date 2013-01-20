@@ -10,6 +10,8 @@
 </head>
 <body>
 	<script>
+		var spinner = 'undefinied';
+
 		function randInt(min, max) {
  			return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
@@ -18,7 +20,8 @@
 
 			rand_photo = data.photos[randInt(0,data.photos.length-1)];
 
-			$('.location').html(data.location);
+			$('.dest').html(data.location[0]);
+			$('.origin').html(data.location[1]);
 			$('.trip-length').html(data.length);
 			$('.loc-img').html('<img src=' + rand_photo + ' />');
 			window.localStorage['bg-img'] = rand_photo;
@@ -31,8 +34,8 @@
 				$('.book-img').html('<img src=' + data.books['photo'] + ' />');
 			}
 			if (data.flights) {
-				// console.log(data.flights[0]['outgoing']);
-				$('.flight').html(data.flights[0]['outgoing'][0]['flight'])
+				$('.flight').html(data.flights[0]['outgoing'][0]['flight']);
+				$('.return-date').html(data.flights[0]['return'][data.flights[0]['return'].length-1]['arrive']);
 			}
 		}
 
@@ -99,6 +102,7 @@
 			    left: 'auto' // Left position relative to parent in px
 			};
 			var target = document.getElementById('loading');
+			console.log("Starting spinner")
 			spinner = new Spinner(opts).spin(target);
 
 			$('#book-btn').click(function() {
@@ -140,9 +144,9 @@
 			<div id="loading" class="load"></div>
 			<div class="delay">
 				<section id="trip-info">
-					<p>Good news, you will be flying out tonight on flight <span class="flight"></span> to fabulous <span class="location"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
+					<p>Good news, you will be flying out tonight on flight <span class="flight"></span> to fabulous <span class="dest"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
 					<p>You will be staying in the glamorous <span class="hotel"></span></p> <div class="hotel-img"></div>
-					<p>While sipping on a <span class='drink'></span>, you will be reading your new favorite book, <span class="book"></span></p> <div class="book-img"></div>
+					<p>Even though you'll be coming back to <span class="origin"></span> on <span class="return-date"></span>, you will have plenty of time to read your new favorite book, <span class="book"></span></p> <div class="book-img"></div>
 				</section>
 				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another!</button>
 			</div>
