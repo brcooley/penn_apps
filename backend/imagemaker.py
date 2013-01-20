@@ -23,10 +23,14 @@ class Maker:
     ff = flashfoto.FlashFoto('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')#not sure if i need to add a baseurl
     fgID = None
     def __init__(self, fgroundURL):
-        self.fgID = self.ff.add(params = {"location":base64.urlsafe_b64encode(fgroundURL), 'privacy':'public'})['ImageVersion']['image_id']
+        self.fgID = self.ff.add(params = {
+            "location": base64.urlsafe_b64encode(fgroundURL),
+            'privacy':'public'
+        })['ImageVersion']['image_id']
         #print "foreground id? " , self.fgID
         self.ff.mugshot(self.fgID)
-        while self.ff.mugshot_status(self.fgID)['mugshot_status'] == 'pending' :
+        while self.ff.mugshot_status(self.fgID) \
+                ['mugshot_status'] == 'pending' :
             time.sleep(10)
         #print "\n STATUS " , self.ff.mugshot_status(self.fgID)
         if self.ff.mugshot_status(self.fgID) == 'failed':
@@ -34,7 +38,10 @@ class Maker:
 
 
     def makePicture( self, bgroundURL ):
-        bgID = self.ff.add(params = {"location":base64.urlsafe_b64encode(bgroundURL), 'privacy':'public'})['ImageVersion']['image_id']
+        bgID = self.ff.add(params = {
+            "location": base64.urlsafe_b64encode(bgroundURL),
+            'privacy': 'public'
+            })['ImageVersion']['image_id']
         #print "background added, with id " + bgID
         bgInfo = self.ff.info(bgID)
     #print bgInfo
@@ -42,9 +49,19 @@ class Maker:
         bgWidth = bgInfo['ImageVersion'][0]['width']
         mergeX = int(bgWidth) / 3
 
-        mergedata = [{"image_id":bgID}, {"image_id":self.fgID, "version":"MugshotMasked", "x":mergeX, "y":bgHeight , "scale":"75" , "angle":"0", "flip":0}]
-        mergedID = self.ff.merge(mergedata, params = {'privacy':'public'} )['ImageVersion']['image_id']
-        return "http://flashfotoapi.com/api/get/" + mergedID +"?partner_username=ncschaaf&partner_apikey=DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g"
+        mergedata = [{ "image_id": bgID }, {
+            "image_id": self.fgID,
+            "version": "MugshotMasked",
+            "x": mergeX,
+            "y": bgHeight ,
+            "scale":"75" ,
+            "angle":"0",
+            "flip": 0
+            }]
+        mergedID = self.ff.merge(mergedata, params = {
+            'privacy': 'public' } )['ImageVersion']['image_id']
+        return "http://flashfotoapi.com/api/get/" + mergedID + \
+            "?partner_username=ncschaaf&partner_apikey=DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g"
 
     
 def batchImages(fgroundURL , backgroundList):
