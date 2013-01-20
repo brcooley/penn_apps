@@ -12,7 +12,6 @@ from datetime import datetime, timedelta
 
 import pymongo
 
-api_key = 'AAAF6JigAbmUBAL7kOw8h1ujvcuGIQvX8BWFng4NkyXyWGZBDrWMKHqHSGP8ccqgAZBjWVRXlSDQdeCh2iaoaP521ygZBHIuDlzIvTGrZAhXVyil521QC'
 
 def schedule_vacation(access_token, data):
     '''Mike and Nathan look at _schedule_vacation instead!'''
@@ -48,7 +47,3 @@ def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
         'timestamp': time.mktime(timestamp.utctimetuple()),
         'jobs_args': [access_token, token, args, kwargs],
         })
-
-if __name__ == '__main__':
-    schedule_vacation(api_key, {'location':'Chicago'})
-
