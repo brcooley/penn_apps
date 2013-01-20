@@ -55,15 +55,19 @@ class vacation_info:
             hotel = hotels.select_hotel(location['name'])
         except Exception as e:
             print e
-	    hotel = {'name': 'an exclusive 5-star resort', 'pic': \
-		'http://images.theage.com.au/2010/04/26/1382672/Hotel_Generic-420x0.jpg')
-	
-	try:
-        book = bookchooser.select_book()
-	except Exception as e:
-	  print e
-	  book = {'title': 'a good book', 'photo': \
-	      'http://www.papierplume.com/media/catalog/product/cache/1/image/5e06319eda06f020e43594a9c230972d/m/o/modern-hard-bound-leather_2.jpg')
+        hotel = {
+            'name': 'an exclusive 5-star resort',
+            'pic': 'http://images.theage.com.au/2010/04/26/1382672/Hotel_Generic-420x0.jpg'
+            }
+
+        try:
+            book = bookchooser.select_book()
+        except Exception as e:
+            print e
+            book = {
+                'title': 'a good book',
+                'photo': 'http://www.papierplume.com/media/catalog/product/cache/1/image/5e06319eda06f020e43594a9c230972d/m/o/modern-hard-bound-leather_2.jpg',
+                }
 
         payload = {
             'location': [city, location['name']],
