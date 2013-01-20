@@ -27,7 +27,7 @@ class Maker:
     ff = None#flashfoto.FlashFoto('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')#not sure if i need to add a baseurl
     fgID = None
     def __init__(self, fgroundURL):
-        i = randInt(1,3)
+        i = randint(1,3)
         if i==1:
             ff = flashfoto.FlashFoto('hrex', 'IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm')
         elif i==2:
@@ -45,7 +45,7 @@ class Maker:
         while self.ff.mugshot_status(self.fgID) \
                 ['mugshot_status'] == 'pending' :
             time.sleep(10)
-        #print "\n STATUS " , self.ff.mugshot_status(self.fgID)
+        print "\n STATUS " , self.ff.mugshot_status(self.fgID)
         if self.ff.mugshot_status(self.fgID) == 'failed':
             assert False
 
