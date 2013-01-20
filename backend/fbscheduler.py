@@ -41,33 +41,24 @@ def _schedule_vacation(db, access_token, data):
     timestamp = datetime.now() + timedelta(days=3, hours=7)
     schedule_job(db, access_token, timestamp, 'put_photo', url, 'Caption!')
     '''
-
-    #timestamp = datetime(2013, 1, 19, 15)
-    #schedule_job(db, access_token, timestamp, 'put_wall_post', "Hello, world!")
-
-    #timestamp = datetime.now() # + timedelta(days=3, hours=7)
+    pass
     #url = 'http://farm5.staticflickr.com/4108/5055725881_d3f62c280d_b.jpg'
 
-    timestamp = datetime(2013, 1, 19, 21, 40)
-    status = generateFirstStatus(data)
-    schedule_job(db, access_token, timestamp, 'put_wall_post', status)
+    #timestamp = datetime(2013, 1, 19, 21, 40)
+    #status = generateFirstStatus(data)
+    #schedule_job(db, access_token, timestamp, 'put_wall_post', status)
 
-    dest = data
-    db_out = list(db.locations.find({'name': dest}))
+    #db_out = list(db.locations.find({'name': dest}))
 
-    pic_list = db_out[0][u'photos']
-    url = random.choice(pic_list)
-    print url
-    schedule_job(db, access_token, timestamp, 'put_photo', url, \
-	'Look at me, here in ' + dest + '!')
+    #pic_list = db_out[0][u'photos']
+    #url = random.choice(pic_list)
+    #print url
+    #schedule_job(db, access_token, timestamp, 'put_photo', url, \
+	#'Look at me, here in ' + dest + '!')
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
     db.jobs.insert({
         'timestamp': time.mktime(timestamp.utctimetuple()),
         'jobs_args': [access_token, token, args, kwargs],
         })
-
-if __name__ == '__main__':
-  #schedule_vacation(api_key, 'Chicago')
-  schedule_vacation(api_key, 'Bangkok')
 
