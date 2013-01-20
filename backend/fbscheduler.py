@@ -18,7 +18,7 @@ def schedule_vacation(access_token, location):
     conn = pymongo.MongoClient('localhost', 27017)
     try:
         _schedule_vacation(db.facation, access_token, location)
-    except:
+    finally:
         conn.close()
 
 
