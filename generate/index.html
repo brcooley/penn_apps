@@ -4,27 +4,33 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<!-- <meta name="author" content="Brett Cooley" /> -->
 	<title>Facation</title>
-	<link rel="stylesheet" href="/css/a.css" />
-	<link href='http://fonts.googleapis.com/css?family=Artifika' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/b.css" />
+	<!-- <link href='http://fonts.googleapis.com/css?family=Artifika' rel='stylesheet' type='text/css'> -->
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="/js/spin.min.js"></script>
 </head>
 <body>
 	<script>
 		var spinner = 'undefinied';
+		var content = 0;
 
 		function randInt(min, max) {
  			return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
-		function add_content (data) {
-
+		function add_content(data) {
+			if (content != 0) {
+				return;
+			}
+			console.log('add_content called');
+						
 			rand_photo = data.photos[randInt(0,data.photos.length-1)];
 
 			$('.dest').html(data.location[1]);
 			$('.origin').html(data.location[0]);
 			$('.trip-length').html(data.length);
-			$('#loc-img').html('<img src=' + rand_photo + ' />');
+			// $('#loc-img').html('<img src=' + rand_photo + ' />');
+			$('.container').append('<img id="anchor" src=' + rand_photo + ' />');
 			window.localStorage['bg-img'] = rand_photo;
 			if (data.hotels) {
 				if (data.hotels['name'].substring(0,3).toLowerCase() == 'the') {
@@ -32,20 +38,28 @@
 				}
 				$('.hotel').html(data.hotels['name']);
 				if (data.hotels['pic'].substring(0,4).toLowerCase() == 'http') {
-					$('#hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
+					// $('#hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
+					$('#hotel-img').append('<img src=' + data.hotels['pic'] + ' />');
 				}
 			}
 			if (data.books) {
 				$('.book').html(data.books['title']);
-				$('#book-img').html('<img src=' + data.books['photo'] + ' />');
+				// $('#book-img').html('<img src=' + data.books['photo'] + ' />');
+				$('#book-img').append('<img src=' + data.books['photo'] + ' />');
 			}
 			if (data.flights) {
 				$('.flight').html(data.flights[0]['outgoing'][0]['flight']);
 				$('.return-date').html(data.flights[0]['return'][data.flights[0]['return'].length-1]['arrive']);
 			}
+
+			$('.hover').each(function() {
+				return $('.main').css('height', $('#anchor').css('height'));
+			});
 		}
 
 		function request_itinerary() {
+			$('img').remove();
+			content = 0;
 			$.ajax({
 				type: 'POST',
 				url: 'http://pennapps.cloudapp.net:8080/vacationinfo',
@@ -54,7 +68,9 @@
 					console.log(response);
 					$(".load").fadeOut(500, function() {
 						spinner.stop();
+						console.log('calling add_content');
 						add_content(response);
+						content = 1;
 						$(".delay").fadeIn(500);
 					});
 				},
@@ -69,8 +85,23 @@
 			});
 		}
 
+		function post_to_start(speed) {
+			$.ajax({
+				type: 'POST',
+				url: 'http://pennapps.cloudapp.net:8080/start',
+				data: {'access_token': window.localStorage['auth_tok'], 'fg_picture': window.localStorage['fg_picture'], 'speed': speed},
+				success: function (response) {
+					window.location.assign('/thanks');
+				},
+				error: function (response) {
+					
+				},
+				dataType: 'json'
+			});
+		}
+
 		// Start actual execution here
-	
+		console.log('Calling request_itinerary');
 		request_itinerary();
 
 		$(window).load(function() {
@@ -95,21 +126,11 @@
 			console.log("Starting spinner")
 			spinner = new Spinner(opts).spin(target);
 
+			$('#speed-btn').click(function() {
+				return post_to_start(1);
+			});
 			$('#book-btn').click(function() {
-				// tell server to confirm registration
-				$.ajax({
-					type: 'POST',
-					url: 'http://pennapps.cloudapp.net:8080/start',
-					data: {'access_token': window.localStorage['auth_tok'], 'fg_picture': window.localStorage['fg_picture'], 'speed': 1},
-					success: function (response) {
-						window.location.assign('/thanks');
-					},
-					error: function (response) {
-						
-					},
-					dataType: 'json'
-				});
-				// window.location.assign('/thanks');
+				return post_to_start(0);
 			});
 
 			$('.retry').click(function() {
@@ -140,10 +161,7 @@
 				};
 				console.log('Starting spinner (again)');
 				spinner = new Spinner(opts).spin(document.getElementById('loading'));
-				// $('.spinner').fadeIn(500, function() {
-				// 	console.log('Starting spinner');
-				// 	spinner.spin();
-				// });
+				console.log('Calling request_itinerary');
 				request_itinerary();
 			});
 		});
@@ -156,16 +174,35 @@
 		<section>
 			<div id="loading" class="load"></div>
 			<div class="delay">
-				<!-- <section id="trip-info">
-					<p>Good news, you will be flying out tonight on flight <span class="flight"></span> to fabulous <span class="dest"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
-					<p>You will be staying in the glamorous <span class="hotel"></span></p> <div class="hotel-img"></div>
-					<p>Even though you'll be coming back to <span class="origin"></span> on <span class="return-date"></span>, you will have plenty of time to read your new favorite book, <span class="book"></span></p> <div class="book-img"></div>
-				</section> -->
-				<div class="main ui-img" id="loc-img"></div>
-				<div class="minor ui-img" id="hotel-img"></div>
-				<div class="secondary ui-img" id="book-img"></div>
-				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another!</button>
+				<div class="main ui-img" id="loc-img">
+					<div class="container">
+						<div class="hover">
+							<h3><span class="dest"></span></h3>
+							Flight <span class="flight"></span> departs tonight
+						</div>
+						<!-- <img src="http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg" /> -->
+					</div>
+					<div class="btn-box">
+						<button class="booking" id="speed-btn">Speed Facation!</button>
+						<button class="booking" id="book-btn">Book my Facation!</button>
+						<button class="retry" id="retry-btn">Not awesome enough, another!</button>
+					</div>
+				</div>
+				<div class="minor ui-img" id="hotel-img">
+					<div class="hover">
+						<span class="hotel"></span>
+					</div>
+					<!-- <img src="http://media.expedia.com/hotels/1000000/10000/5000/4903/4903_61_b.jpg" /> -->
+				</div>
+				<div class="secondary ui-img" id="book-img">
+					<div class="hover">
+						<span class="book"></span>
+					</div>
+					<!-- <img src="http://4.bp.blogspot.com/-ECNQ7Y4kVmI/UFzn6D573gI/AAAAAAAAAVg/qmjsE936qVk/s1600/50_shades_darker.jpg" /> -->
+				</div>
 			</div>
+
+
 			<div class="error">
 				<p>You don't really want to go on facation, do you? If you did, our server wouldn't have given you an error.</p>
 				<button class="retry">I'm sorry, please let me go on a facation!</button>

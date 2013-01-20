@@ -79,9 +79,7 @@ body {
   font: 62.5% "Open Sans", Tahoma, sans-serif;
   color: #dddddd;
   text-align: center;
-  background: no-repeat center center fixed;
-  background-image: url("http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg");
-  background-size: cover; }
+  background: #222222; }
 
 a {
   -webkit-transition: color .5s ease;
@@ -108,13 +106,13 @@ h5 {
 
 img {
   display: inline-block;
-  margin: 10px;
+  margin: 10px 0;
   text-align: left;
-  max-width: 640px;
+  width: 100%;
   border-radius: 6px; }
 
 button {
-  margin: 20px 10px;
+  margin: 0 4px;
   padding: 10px;
   color: #dddddd;
   background: #3b5998;
@@ -135,9 +133,19 @@ button {
     background: #2d4373;
     border-color: #3b5998; }
 
-.delay, .error {
+footer {
+  color: #a2a2a2; }
+
+.error {
   display: none;
   width: 940px; }
+
+.retry {
+  width: 43%; }
+
+.delay {
+  display: none;
+  text-align: left; }
 
 .hide {
   display: none; }
@@ -147,36 +155,61 @@ button {
   float: left; }
 
 .main {
-  max-width: 60%; }
+  width: 65%; }
 
 .secondary {
-  max-width: 30%; }
+  left: 5%;
+  width: 15%; }
 
 .minor {
-  max-width: 30%; }
+  width: 25%; }
 
-.below {
-  margin-bottom: 20px; }
+.btn-box {
+  display: inline-block;
+  clear: both;
+  margin: 10px 0;
+  width: 100%; }
+
+.hover {
+  position: absolute;
+  padding: 40px 10px 20px;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  text-align: center;
+  color: rgba(221, 221, 221, 0);
+  background: rgba(34, 34, 34, 0);
+  border-radius: 6px;
+  -webkit-transition: background .5s ease, color .5s ease;
+  -moz-transition: background .5s ease, color .5s ease;
+  -o-transition: background .5s ease, color .5s ease;
+  transition: background .5s ease, color .5s ease; }
+  .hover:hover {
+    -webkit-transition: background .5s ease, color .5s ease;
+    -moz-transition: background .5s ease, color .5s ease;
+    -o-transition: background .5s ease, color .5s ease;
+    transition: background .5s ease, color .5s ease;
+    color: #dddddd;
+    background: rgba(34, 34, 34, 0.5); }
+
+.booking {
+  width: 27%; }
 
 #wrapper {
-  margin: 10px auto;
-  padding: 10px;
-  width: 960px;
-  font-size: 1.4em;
-  background: rgba(34, 34, 34, 0.6);
-  border-radius: 10px; }
-
-#img-btn {
-  color: #222222;
-  background: #ccc;
-  border: 1px solid #e6e6e6; }
-  #img-btn:hover {
-    background: #e6e6e6;
-    border-color: #ccc; }
+  margin: 1% 4%;
+  padding: 1%;
+  width: 90%;
+  font-size: 1.8em;
+  background: #222222; }
 
 #loading {
   height: 200px; }
 
-#trip-info {
-  margin: 0 10px;
-  text-align: left; }
+#loc-img {
+  margin-right: 20px; }
+
+#speed-btn {
+  margin-left: 0; }
+
+#retry-btn {
+  margin-right: 0; }
