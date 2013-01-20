@@ -65,6 +65,11 @@ def _schedule_vacation(db, access_token, data):
     timestamp = datetime(2013, 1, 19, 21, 40)
     schedule_job(db, access_token, timestamp, 'put_wall_post', stat1)
     schedule_job(db, access_token, timestamp, 'put_wall_post', stat2)
+    #empty pics
+    for image in data['photos']['plain']:
+        schedule_job(db, access_token, timestamp, 'put_photo', image, '')
+    for image in data['photos']['composite']:
+        schedule_job(db, access_token, timestamp, 'put_photo', image, generateImageTag(dest))
     schedule_job(db, access_token, timestamp, 'put_wall_post', stat3)
     
 
