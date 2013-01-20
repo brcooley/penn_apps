@@ -2,6 +2,10 @@ import flashfoto
 import json, requests, urllib
 import base64, time
 
+# Peter's api stuff
+# api:      A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj
+# username: nejstastnejsistene
+
 #def getBackground():
     #get stuff from mike's flickr scraper
     #should be a url
