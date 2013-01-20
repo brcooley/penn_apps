@@ -38,11 +38,14 @@ def getHotelImages( hotelID ):
         }
     hotelInfo = requests.get(url, params=payload)
     junk = hotelInfo.json()
+    pprint.pprint(junk)
+    hos = junk['HotelRoomImageResponse']#['RoomImages']['RoomImage']
+    pprint.pprint(hos)
     return [i.values()[0] for i in \
         junk['HotelRoomImageResponse']['RoomImages']['RoomImage']]
     return urlList
 
 
-#someHotel = pickHotel('Boston')
+someHotel = select_hotel('Chicago')
 #print someHotel
-#print getHotelImages(someHotel['hotelId'])
+pprint.pprint( getHotelImages(someHotel['hotelId']))
