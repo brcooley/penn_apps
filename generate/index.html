@@ -89,7 +89,7 @@
 		);
 
 		$(window).load(function() {
-			var opts = {
+			opts = {
 			    lines: 9, // The number of lines to draw
 			    length: 2, // The length of each line
 			    width: 15, // The line thickness
@@ -135,7 +135,7 @@
 					$('.error').fadeOut(500);
 					console.log('Error gone');
 				}
-				console.log('Starting spinner');
+				console.log('Starting spinner (again)');
 				spinner = new Spinner(opts).spin(document.getElementById('loading'));
 				// $('.spinner').fadeIn(500, function() {
 				// 	console.log('Starting spinner');
