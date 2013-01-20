@@ -45,18 +45,18 @@
 	        if (response.authResponse) {
 	            // connected
 	    		auth_tok = response.authResponse.accessToken;
+				window.localStorage['auth_tok'] = auth_tok;
+				window.location.assign('/generate')
 
 	        } else {
 	            // cancelled
 	        }
-	    });
+	    }, {scope: 'publish_actions'});
 	}
 
 	$(window).load(function() {
 		$('#login-btn').click(function() {
 			login();
-			window.localStorage['auth_tok'] = auth_tok;
-			window.location.assign('/generate')
 		});
 	});
 
