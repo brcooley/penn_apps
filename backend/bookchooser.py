@@ -24,13 +24,12 @@ def select_book():
     WHICH_ENTRY = random.randint(0,len(book_list))
     title = book_list[WHICH_ENTRY][u'book_details'][0][u'title']
 
-    WHICH_IMG = 0
     art = BookArt().get_art(title)
 
     # Try the first few images in case one 404s
     for i in range(10):
         # Process the JSON string.
-        url = art[u'responseData'][u'results'][WHICH_IMG][u'url'] 
+        url = art[u'responseData'][u'results'][i][u'url'] 
         # Make sure the image doesn't 404
         response = requests.get(url)
         if response.status_code == 200:
