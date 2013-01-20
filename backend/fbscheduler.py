@@ -16,6 +16,8 @@ import random
 from generateStatus import *
 
 api_key = '415779275173477'
+ORIGIN = 0
+DEST = 1
 
 def schedule_vacation(access_token, data):
     '''Mike and Nathan look at _schedule_vacation instead!'''
@@ -55,6 +57,16 @@ def _schedule_vacation(db, access_token, data):
     #print url
     #schedule_job(db, access_token, timestamp, 'put_photo', url, \
 	#'Look at me, here in ' + dest + '!')
+    dest = data['location'][DEST]
+    stat1 = generateFirstStatus(dest)
+    stat2 = generateMiddleStatus(dest)
+    stat3 = generateEndStatus(dest)
+    #fire them all off at once
+    timestamp = datetime(2013, 1, 19, 21, 40)
+    schedule_job(db, access_token, timestamp, 'put_wall_post', stat1)
+    schedule_job(db, access_token, timestamp, 'put_wall_post', stat2)
+    schedule_job(db, access_token, timestamp, 'put_wall_post', stat3)
+    
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
     db.jobs.insert({

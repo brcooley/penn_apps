@@ -30,7 +30,9 @@
 					data.hotels['name'] = data.hotels['name'].substring(3, data.hotels['name'].length-1);
 				}
 				$('.hotel').html(data.hotels['name']);
-				$('.hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
+				if (data.hotels['pic'].substring(0,4).toLowerCase() == 'http') {
+					$('.hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
+				}
 			}
 			if (data.books) {
 				$('.book').html(data.books['title']);
