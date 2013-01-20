@@ -80,7 +80,7 @@ body {
   color: #dddddd;
   text-align: center;
   background: no-repeat center center fixed;
-  background-image: url("http://upload.wikimedia.org/wikipedia/commons/5/51/Sunrise_thailand_ko_samui.jpg");
+  background-image: url("/img/sunrise.jpg");
   background-size: cover; }
 
 a {
@@ -159,9 +159,29 @@ button {
   margin-bottom: 20px; }
 
 #wrapper {
-  margin: 10px auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto auto;
   padding: 10px;
   width: 960px;
+  height: 260px;
+  font-size: 1.4em;
+  background: rgba(34, 34, 34, 0.6);
+  border-radius: 10px; }
+
+#mid-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto auto;
+  padding: 10px;
+  width: 960px;
+  height: 180px;
   font-size: 1.4em;
   background: rgba(34, 34, 34, 0.6);
   border-radius: 10px; }

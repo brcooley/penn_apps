@@ -1,0 +1,8 @@
+Senery:
+	"Get ready to head out to beautiful "+dest+" on flight "+flight+"tonight!"
+
+hotel:
+	"You'll be staying at the "+hotel+". Nothing but the best for your facation!"
+
+book:
+	"During your trip, you will read New York Times Bestseller "+bookName+". You could also read this at home while you are avoiding your friends!"
