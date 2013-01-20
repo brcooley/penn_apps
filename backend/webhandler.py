@@ -77,18 +77,21 @@ class start:
         conn = pymongo.MongoClient('localhost', 27017)
         try:
             db = conn.facation
+            new_token = extend_token(access_token)
             db.vacations.update({
                 'access_token': access_token, 
                 }, {
-                'access_token': extend_token(access_token),
-                'location': location,
+                'access_token': new_token,
                 'album_id': None
+                })
+            data = db.vacations.find({
+                'access_token': new_token,
                 })
         finally:
             db.close()
 
         # Schedule all the facebook stuff here!!!!!!!!!
-        fbscheduler.schedule_vacation(access_token, location)
+        fbscheduler.schedule_vacation(access_token, data)
 
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')
