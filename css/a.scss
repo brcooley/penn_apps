@@ -24,6 +24,7 @@ a {
 }
 h1 {
 	font-size: 4em;
+	font-family: 'Artifika';
 	// letter-spacing: 0.25em;
 	text-transform: uppercase;
 }
@@ -97,6 +98,11 @@ button {
 	background: rgba($bg, 0.6);
 	border-radius: 10px;
 
+}
+#photo-btn {
+	color: $bg;
+	background: #ccc;
+	border: 1px solid darken(#ccc, 10%);
 }
 #loading {
 	height: 200px;
