@@ -13,7 +13,9 @@ from datetime import datetime, timedelta
 import pymongo
 import pprint
 import random
+from generateStatus import *
 
+api_key = '415779275173477'
 
 def schedule_vacation(access_token, data):
     '''Mike and Nathan look at _schedule_vacation instead!'''
@@ -47,10 +49,10 @@ def _schedule_vacation(db, access_token, data):
     #url = 'http://farm5.staticflickr.com/4108/5055725881_d3f62c280d_b.jpg'
 
     timestamp = datetime(2013, 1, 19, 21, 40)
-    schedule_job(db, access_token, timestamp, 'put_wall_post', \
-            "Hello, %s %s!"%(data['location'], random.random()))
+    status = generateFirstStatus(data)
+    schedule_job(db, access_token, timestamp, 'put_wall_post', status)
 
-    dest = 'Seattle'
+    dest = data
     db_out = list(db.locations.find({'name': dest}))
 
     pic_list = db_out[0][u'photos']
@@ -67,5 +69,5 @@ def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
 
 if __name__ == '__main__':
   #schedule_vacation(api_key, 'Chicago')
-  schedule_vacation(api_key, 'Seattle')
+  schedule_vacation(api_key, 'Bangkok')
 
