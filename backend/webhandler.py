@@ -55,15 +55,20 @@ class vacation_info:
             hotel = hotels.select_hotel(location['name'])
         except Exception as e:
             print e
-	    hotel = {'name': 'an exclusive 5-star resort', 'pic': \
-		'http://images.theage.com.au/2010/04/26/1382672/Hotel_Generic-420x0.jpg')
-	
-	try:
-        book = bookchooser.select_book()
-	except Exception as e:
-	  print e
-	  book = {'title': 'a good book', 'photo': \
-	      'http://www.papierplume.com/media/catalog/product/cache/1/image/5e06319eda06f020e43594a9c230972d/m/o/modern-hard-bound-leather_2.jpg')
+
+        hotel = {
+            'name': 'An exclusive 5-star resort',
+            'pic': 'http://images.theage.com.au/2010/04/26/1382672/Hotel_Generic-420x0.jpg'
+            }
+
+        try:
+            book = bookchooser.select_book()
+        except Exception as e:
+            print e
+            book = {
+                'title': 'A good book',
+                'photo': 'http://www.papierplume.com/media/catalog/product/cache/1/image/5e06319eda06f020e43594a9c230972d/m/o/modern-hard-bound-leather_2.jpg',
+                }
 
         payload = {
             'location': [city, location['name']],
@@ -95,8 +100,8 @@ class start:
         # expect access_token and fb_picture
         access_token = web.input()['access_token']
         fg_picture = web.input()['fg_picture']
-#        speed = web.input()['speed']
-        speed = True
+        speed = web.input()['speed']
+        #speed = True
 
         def generate_vacation():
             # Add this vacation to the db.
@@ -115,18 +120,21 @@ class start:
                     composites = photos[:len(photos)/2]
                     plain = photos[len(photos)/2:]
                     if composites:
-                        composites = imagemaker.batchImages(
-                                fg_picture, composites)
+                        try:
+                            composites = imagemaker.batchImages(
+                                    fg_picture, composites)
+                        except Exception as e:
+                            print e
                     data['photos'] = {
                         'composite': composites,
                         'plain': plain,
                         }
                     data['speed'] = bool(speed)
-                    print data['photos']
+                    #print data['photos']
             finally:
                 conn.close()
 
-            # Schedule all the facebook stuff here!!!!!!!!!
+            # Schedule all the facebook stuff here.
             fbscheduler.schedule_vacation(access_token, data)
 
         threading.Thread(target=generate_vacation).start()

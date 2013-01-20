@@ -75,6 +75,7 @@ def _schedule_vacation(db, access_token, data):
     for image in data['photos']['composite']:
         schedule_job(db, access_token, timestamp2, 'put_photo', image, generateImageTag(dest))
     schedule_job(db, access_token, timestamp3, 'put_wall_post', stat3)
+    #schedule_job(db, access_token, timestamp1, 'checkin', data['location'][1])
     
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
