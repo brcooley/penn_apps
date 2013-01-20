@@ -52,7 +52,7 @@ def read_jobs():
     global db
     return list(db.jobs.find(
         { 'timestamp': { '$lte': time.time() } },
-        { 'timestamp': 0, '_id': 0, 'job_args': 1}))
+        { '_id': 0, 'job_args': 1}))
 
 
 def execute_job(job):
@@ -86,29 +86,13 @@ def create_album(graph, name):
     return graph.put_object('me', 'albums', name=name)['id']
 
 
-def extend_token(access_token):
-    url = ('https://graph.facebook.com/oauth/access_token?' + \
-        'grant_type=fb_exchange_token&' \
-        'client_id=%s&' \
-        'client_secret=%s&' \
-        'fb_exchange_token=%s') % (app_id, app_secret, access_token)
-    dct = dict(x.split('=') for x in requests.get(url).text.split('&'))
-    # Update access_key everywhere in table
-    new_access_token = dct['access_token']
-    db.collections.update(
-        { 'access_token': new_access_token },
-        { 'access_token': access_token })
-    return new_access_token
- 
-
 db = None
 def main():
     global db
     conn = pymongo.MongoClient('localhost', 27017)
     db = conn.facation
     try:
-        access_token = extend_token('AAAF6JigAbmUBAAn6ZBtztxwxfgVgHSpVAHEgpqmvZBFgMLet0VEyZAEHnKY4u89o3CaWtZAKcrvIxynmUvr3Vk8yIX9gxnxd2YDzHF3TgIuV6FmVJOJp')
-        execute_job((access_token, 'put_wall_post', ('I AM HUNGRY',), {}))
+        access_token = extend_token('AAAF6JigAbmUBAIY1cyAmScH3pE86fteAXvuao3tX1YY6KGQ3cBo8dRqllcySRjIQ11AkDvOgIwUTOUwHzUgydDBUFSkRigPcV9JtR2E7mbbi79oP')
         pool = multiprocessing.Pool(processes=num_processes)
         while True:
             debug('reading and executing jobs asynchronously')
