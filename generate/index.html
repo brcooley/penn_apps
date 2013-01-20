@@ -20,8 +20,8 @@
 
 			rand_photo = data.photos[randInt(0,data.photos.length-1)];
 
-			$('.dest').html(data.location[0]);
-			$('.origin').html(data.location[1]);
+			$('.dest').html(data.location[1]);
+			$('.origin').html(data.location[0]);
 			$('.trip-length').html(data.length);
 			$('.loc-img').html('<img src=' + rand_photo + ' />');
 			window.localStorage['bg-img'] = rand_photo;
