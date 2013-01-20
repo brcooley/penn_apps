@@ -133,10 +133,11 @@
 				if ($('.error').css('display') != 'none') {
 					$('.error').fadeOut(500);
 				}
-				$('.spinner').fadeIn(500, function() {
-					console.log('Starting spinner');
-					spinner.spin();
-				});
+				spinner.spin();
+				// $('.spinner').fadeIn(500, function() {
+				// 	console.log('Starting spinner');
+				// 	spinner.spin();
+				// });
 				request_itinerary();
 			});
 		});
