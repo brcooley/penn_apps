@@ -76,7 +76,7 @@ def execute_job(_id, job):
                 'access_token': access_token,
                 }, {
                 'album_id': album_id,
-                }
+                })
         imgdata = requests.get(args[0])
         graph.put_photo(io.BytesIO(imgdata.content), args[1], \
                 album_id=album_id)
