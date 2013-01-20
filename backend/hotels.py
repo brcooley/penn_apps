@@ -25,6 +25,7 @@ def select_hotel( dest, whichHotel=0):
     #need to limit what info is being passed up
     hotelSummary = hotelInfo.json() \
         ['HotelListResponse']['HotelList']['HotelSummary'][whichHotel]
+    hotelSummary['pic' = getHotelImages(hotelSummary['hotelId'])[0] ]
     return hotelSummary
 
 
