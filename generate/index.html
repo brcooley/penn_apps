@@ -23,7 +23,7 @@
 			$('.dest').html(data.location[1]);
 			$('.origin').html(data.location[0]);
 			$('.trip-length').html(data.length);
-			$('.loc-img').html('<img src=' + rand_photo + ' />');
+			$('#loc-img').html('<img src=' + rand_photo + ' />');
 			window.localStorage['bg-img'] = rand_photo;
 			if (data.hotels) {
 				if (data.hotels['name'].substring(0,3).toLowerCase() == 'the') {
@@ -31,12 +31,12 @@
 				}
 				$('.hotel').html(data.hotels['name']);
 				if (data.hotels['pic'].substring(0,4).toLowerCase() == 'http') {
-					$('.hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
+					$('#hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
 				}
 			}
 			if (data.books) {
 				$('.book').html(data.books['title']);
-				$('.book-img').html('<img src=' + data.books['photo'] + ' />');
+				$('#book-img').html('<img src=' + data.books['photo'] + ' />');
 			}
 			if (data.flights) {
 				$('.flight').html(data.flights[0]['outgoing'][0]['flight']);
@@ -171,11 +171,14 @@
 		<section>
 			<div id="loading" class="load"></div>
 			<div class="delay">
-				<section id="trip-info">
+				<!-- <section id="trip-info">
 					<p>Good news, you will be flying out tonight on flight <span class="flight"></span> to fabulous <span class="dest"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
 					<p>You will be staying in the glamorous <span class="hotel"></span></p> <div class="hotel-img"></div>
 					<p>Even though you'll be coming back to <span class="origin"></span> on <span class="return-date"></span>, you will have plenty of time to read your new favorite book, <span class="book"></span></p> <div class="book-img"></div>
-				</section>
+				</section> -->
+				<div class="main" id="loc-img"></div>
+				<div class="minor" id="hotel-img"></div>
+				<div class="secondary" id="book-img"></div>
 				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another!</button>
 			</div>
 			<div class="error">
