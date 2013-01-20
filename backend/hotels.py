@@ -12,7 +12,7 @@ import pprint
 # dest is a string which contains a city name.
 # It can also have country, state, etc.
 # all dates MM/DD/YYYY -- where do the dates go???
-def pick_hotel( dest, whichHotel=0):
+def select_hotel( dest, whichHotel=0):
     url = 'http://api.ean.com/ean-services/rs/hotel/v3/list'
     payload = {
         'apiKey': 'j6xun3rbjn66vhzhvnm99twg',

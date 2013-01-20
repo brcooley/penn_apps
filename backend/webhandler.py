@@ -19,6 +19,7 @@ import web
 import airport
 import bookchooser
 import flightsearch
+import hotels
 
 urls = (
     '/vacationinfo', 'vacation_info',
@@ -50,7 +51,7 @@ class vacation_info:
             'photos': location['photos'][:10],
             'flights': flightsearch.select_flight(
                 city, location['name'], start_date, end_date),
-            'hotels': None,
+            'hotels': hotels.select_hotel(location['name']),
             'books': bookchooser.select_book(),
             'length': length,
             })
