@@ -65,7 +65,7 @@ class Maker:
             "version": "MugshotMasked",
             "x": mergeX,
             "y": bgHeight ,
-            "scale":"66" ,
+            "scale":"75" ,
             "angle":"0",
             "flip": 0
             }]
