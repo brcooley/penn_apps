@@ -1,6 +1,7 @@
 import flashfoto
 import json, requests, urllib
 import base64, time
+import random
 
 # Peter's api stuff
 # api:      A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj
@@ -23,9 +24,18 @@ import base64, time
 mikes_key = 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH'
 
 class Maker:
-    ff = flashfoto.FlashFoto('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')#not sure if i need to add a baseurl
+    ff = None#flashfoto.FlashFoto('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')#not sure if i need to add a baseurl
     fgID = None
     def __init__(self, fgroundURL):
+        i = randInt(1,3)
+        if i==1:
+            ff = flashfoto.FlashFoto('hrex', 'IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm')
+        elif i==2:
+            ff = flashfoto.FlashFoto('nejstastnejsistene', 'A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj')
+        else:
+            ff = flashfoto.FlashFoto('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')
+
+
         self.fgID = self.ff.add(params = {
             "location": base64.urlsafe_b64encode(fgroundURL),
             'privacy':'public'
