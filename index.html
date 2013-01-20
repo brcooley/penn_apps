@@ -72,6 +72,8 @@
 				},
 				function(FPFile){
 					window.localStorage['fg_picture'] = FPFile.url;
+					$('#img-btn').fadeOut(500);
+					$('.hide').fadeIn(500);
 				},
 				function(FPError){
 					console.log(FPError.toString());
@@ -93,10 +95,10 @@
 	<div id="wrapper">
 		<header>
 			<h1><a href="/">Facation</a></h1>
-			<h5>Life too stressful?  Take a "vacation" and let us keep your Facebook friends up to date on your adventures!</h5>
+			<h5>Life too stressful?  Take a "vacation" and let us keep your Facebook friends up to date on your adventures!  To start, take or upload a photo so you can fully experience your facation.</h5>
 		</header>
 		<section>
-			<button id="img-btn">Pick a photo</button><button id="login-btn">Login With Facebook</button>
+			<button id="img-btn">Pick a photo</button><button class="hide" id="login-btn">Login With Facebook</button>
 		</section>
 		<footer>
 			Using the Facebook API, Masherly (Expedia), Azure, Filepicker.io, MongoDB and more!
