@@ -30,6 +30,7 @@ def select_hotel( dest, whichHotel=0):
         hotelSummary['pic'] = hotelSummary['pic'][0]
         return hotelSummary
     elif whichHotel == 4:
+        hotelSumary['pic'] = 'http://imgur.com/dZxKhRP'
         return hotelSummary
     else:
         whichHotel += 1
