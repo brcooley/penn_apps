@@ -1,0 +1,35 @@
+# facebook
+http://static.squarespace.com/static/50787a36e4b0a208a5f8d3fe/50b6f963e4b0079225ddf7f3/50b6f964e4b0afec68ac7bfb/1357251027934/facebook_color.png?format=300w
+
+# filepicker.io
+http://static.squarespace.com/static/50787a36e4b0a208a5f8d3fe/50b6f963e4b0079225ddf7f3/50bdb1e9e4b0de01274c7a2a/1354609140716/filepicker.png?format=300w
+
+# yahoo!
+http://static.squarespace.com/static/50787a36e4b0a208a5f8d3fe/50b6f963e4b0079225ddf7f3/50b6f971e4b05c3cd8ba17e1/1354335433069/yahoo_color.png?format=300w
+
+# mashery
+http://static.squarespace.com/static/50787a36e4b0a208a5f8d3fe/50b98480e4b082b72f30d9a7/50cd1228e4b0409d244427e4/1355616829464/mashery_color.png?format=300w
+
+# New York Times
+http://static.squarespace.com/static/50787a36e4b0a208a5f8d3fe/50b98480e4b082b72f30d9a7/50f713b7e4b0156b1c508d5f/1358369735352/nytimes.jpg?format=300w
+
+# Flickr ---> not from pennApps website, but rather google search
+http://www.indiawaterportal.org/sites/indiawaterportal.org/files/images/flickr_logo.jpg
+
+# Expedia ---> not from pennApps website
+http://www.underconsideration.com/brandnew/archives/expedia_logo_detail.jpg
+
+# mongodb
+http://static.squarespace.com/static/50787a36e4b0a208a5f8d3fe/50b6f963e4b0079225ddf7f3/50b6f968e4b0079225ddf7f8/1354335439980/mongodb_color.png?format=300w
+
+# hipmunk
+http://blog.tortugabackpacks.com/wp-content/uploads/2011/01/Hipmunk-Logo.jpg
+
+# google search
+http://www.caribwebdev.com/wp-content/uploads/2008/11/google-site-search-logo.jpg
+
+# FlashFoto
+http://flashfotoapi.com/img/logo.png
+
+# Windows Azure
+http://www.startuptoolshop.com/uploads/1/2/8/0/12807037/2486455_orig.png
