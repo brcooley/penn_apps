@@ -92,7 +92,6 @@ def main():
     conn = pymongo.MongoClient('localhost', 27017)
     db = conn.facation
     try:
-        access_token = extend_token('AAAF6JigAbmUBAIY1cyAmScH3pE86fteAXvuao3tX1YY6KGQ3cBo8dRqllcySRjIQ11AkDvOgIwUTOUwHzUgydDBUFSkRigPcV9JtR2E7mbbi79oP')
         pool = multiprocessing.Pool(processes=num_processes)
         while True:
             debug('reading and executing jobs asynchronously')
