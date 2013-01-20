@@ -49,7 +49,7 @@ class vacation_info:
         book = bookchooser.select_book()
 
         blebleble = {
-            'location': location['name'],
+            'location': [city, location['name']],
             'photos': location['photos'][:10],
             'flights': flights,
             'hotels': hotel,
