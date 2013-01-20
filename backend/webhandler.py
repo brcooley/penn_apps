@@ -74,7 +74,7 @@ class vacation_info:
 class start:
     def POST(self):
         # expect access_token and fb_picture
-        locals().update(web.input())
+        access_token = web.input()['access_token']
 
         # Add this vacation to the db.
         conn = pymongo.MongoClient('localhost', 27017)
@@ -84,14 +84,14 @@ class start:
             db.vacations.update({
                 'access_token': access_token, 
                 }, {
-                'access_token': new_token,
-                'album_id': None
+                #'access_token': new_token,
+                '$set': { 'album_id': None, }
                 })
-            data = db.vacations.find({
-                'access_token': new_token,
+            data = db.vacations.find_one({
+                'access_token': access_token,
                 })
         finally:
-            db.close()
+            conn.close()
 
         # Schedule all the facebook stuff here!!!!!!!!!
         fbscheduler.schedule_vacation(access_token, data)
@@ -99,8 +99,7 @@ class start:
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')
         web.header('Content-Type', 'application/json')
-        return json.dumps({
-            })
+        return json.dumps({ })
 
 def rand_location():
     conn = pymongo.MongoClient('localhost', 27017)
@@ -113,6 +112,7 @@ def rand_location():
 
 
 def extend_token(access_token):
+    global app_id, app_secret
     url = ('https://graph.facebook.com/oauth/access_token?' + \
         'grant_type=fb_exchange_token&' \
         'client_id=%s&' \
@@ -129,7 +129,19 @@ def extend_token(access_token):
     return new_access_token
  
 
-
+import ConfigParser
+config = ConfigParser.RawConfigParser()
+try:
+    with open(os.path.expanduser('~/.facationd.conf')) as f:
+        config.readfp(f)
+    app_id = config.get('facationd', 'app_id')
+    app_secret = config.get('facationd', 'app_secret')
+    assert app_id and app_secret
+except AssertionError:
+    print 'config needs keys app_id and app_secret under [facationd]'
+except IOError:
+    print 'missing config file ~/.facationd.conf'
+ 
 
 if __name__ == '__main__':
     app = web.application(urls, globals())
