@@ -71,7 +71,7 @@ def execute_job(_id, job):
         location, album_id = result['location'][1], result['album_id']
         if album_id is None:
             album_name = 'Awesome %s Photos! :D' % location
-            album_id = create_album(graph, album_name)
+            album_id = str(create_album(graph, album_name))
             db.vacations.update({
                 'access_token': access_token,
                 }, {
@@ -79,7 +79,7 @@ def execute_job(_id, job):
                 })
         imgdata = requests.get(args[0])
         graph.put_photo(io.BytesIO(imgdata.content), args[1], \
-                album_id=album_id)
+                album_id=str(album_id))
     #elif action == 'checkin':
     #    data = graph.get_object('search?q=%s&type=place' % \
     #            urllib.quote(args[0]))
