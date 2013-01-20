@@ -53,7 +53,7 @@ class vacation_info:
 
         try:
             hotel = hotels.select_hotel(location['name'])
-        except Exception sa e:
+        except Exception as e:
             print e
             hotel = None
         book = bookchooser.select_book()
@@ -102,7 +102,7 @@ class start:
                 data = db.vacations.find_one({
                     'access_token': access_token,
                     })
-                if False
+                if False:
                     photos = db.locations.find_one({
                         'name': data['location'][1],
                         })['photos']
