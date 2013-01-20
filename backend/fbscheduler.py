@@ -2,7 +2,8 @@
 #fbscheduler.py
 # @author Mike
 #
-# schedules automated fb activity for delayed execution
+# schedules automated fb activity for delayed execution,
+# talk to peter about how it works
 #
 
 import time
