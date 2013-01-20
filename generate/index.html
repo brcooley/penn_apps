@@ -24,7 +24,7 @@
 			window.localStorage['bg-img'] = rand_photo;
 			if (data.hotels) {
 				$('.hotel').html(data.hotels['name']);
-				$('.hotel-img').html(data.hotels['pic']);
+				$('.hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
 			}
 			if (data.books) {
 				$('.book').html(data.books['title']);
