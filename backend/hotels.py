@@ -38,4 +38,3 @@ def getHotelImages( hotelID ):
 someHotel = pickHotel('Boston')
 #print someHotel
 print getHotelImages(someHotel['hotelId'])
->>>>>>> cb643f7e80d29a255f264d86ba8dc7e17e8be6f0
