@@ -24,6 +24,7 @@
 			window.localStorage['bg-img'] = rand_photo;
 			if (data.hotels) {
 				$('.hotel').html(data.hotels['name']);
+				$('.hotel-img').html('<img src=' + data.hotels['pic'] + ' />');
 			}
 			if (data.books) {
 				$('.book').html(data.books['title']);
@@ -121,8 +122,10 @@
 				// send another request to server
 				$('.delay').fadeOut(500);
 				$('.error').fadeOut(500);
-				$('.spinner').fadeIn(500);
-				spinner.spin();
+				$('.spinner').fadeIn(500, function() {
+					console.log('Starting spinner');
+					spinner.spin();
+				});
 				request_itinerary();
 			});
 		});
@@ -136,18 +139,19 @@
 			<div id="loading" class="load"></div>
 			<div class="delay">
 				<section id="trip-info">
-					<p>For your amazing Facation, you will be flying to fabulous <span class="location"></span>! for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
-					<p>You will be staying in the glamorous <span class="hotel"></span>, sipping on a <span class='drink'></span> and reading your new favorite book, <span class="book"></span></p> <div class="book-img"></div>
+					<p>Good news, you will be flying out tonight on flight <span class="flight"></span> to fabulous <span class="location"></span> for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
+					<p>You will be staying in the glamorous <span class="hotel"></span></p> <div class="hotel-img"></div>
+					<p>While sipping on a <span class='drink'></span>, you will be reading your new favorite book, <span class="book"></span></p> <div class="book-img"></div>
 				</section>
-				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another</button>
+				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another!</button>
 			</div>
 			<div class="error">
 				<p>You don't really want to go on facation, do you? If you did, our server wouldn't have given you an error.</p>
-				<button class="retry">I'm sorry, I really do want a facation!</button>
+				<button class="retry">I'm sorry, please let me go on a facation!</button>
 			</div>
 		</section>
 		<footer>
-			Using the Facebook API, Masherly (Hotwire), Azure, NYTimes, and more!
+			Using the Facebook API, Masherly (Expedia), Azure, Filepicker.io, MongoDB and more!
 		</footer>
 	</div>
 </body>
