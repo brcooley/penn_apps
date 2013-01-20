@@ -55,7 +55,7 @@ class Maker:
             })['ImageVersion']['image_id']
         #print "background added, with id " + bgID
         bgInfo = self.ff.info(bgID)
-    #print bgInfo
+        print bgInfo
         bgHeight = bgInfo['ImageVersion'][0]['height']
         bgWidth = bgInfo['ImageVersion'][0]['width']
         mergeX = int(bgWidth) / 3
