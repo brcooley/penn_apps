@@ -1,4 +1,16 @@
-import json, requests, urllib
+#!/usr/bin/env python
+# @author Mike
+#
+# hotels.py
+#
+
+import json
+import requests
+import urllib
+import pprint
+
+def main():
+  pickHotel("Boston", '01/27/2013', '01/29/2013')
 
 # dest is a string which contains a city name. It can also have country, state, etc.
 # all dates MM/DD/YYYY
