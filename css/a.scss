@@ -71,6 +71,9 @@ button {
 	// visibility: hidden;
 	width: 940px;
 }
+.hide {
+	display: none;
+}
 .ui-img {
 	position: relative;
 	float: left;
@@ -102,10 +105,10 @@ button {
 #img-btn {
 	color: $bg;
 	background: #ccc;
-	border: 1px solid darken(#ccc, 10%);
+	border: 1px solid lighten(#ccc, 10%);
 
 	&:hover {
-		background: darken(#ccc, 10%);
+		background: lighten(#ccc, 10%);
 		border-color: #ccc;
 	}
 }
