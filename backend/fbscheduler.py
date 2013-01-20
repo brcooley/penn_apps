@@ -6,12 +6,11 @@
 #
 
 import time
-import facationd
 from datetime import *
 
 import pymongo
 
-api_key = extend_token('AAAF6JigAbmUBAAn6ZBtztxwxfgVgHSpVAHEgpqmvZBFgMLet0VEyZAEHnKY4u89o3CaWtZAKcrvIxynmUvr3Vk8yIX9gxnxd2YDzHF3TgIuV6FmVJOJp')
+api_key = 'AAAF6JigAbmUBAAn6ZBtztxwxfgVgHSpVAHEgpqmvZBFgMLet0VEyZAEHnKY4u89o3CaWtZAKcrvIxynmUvr3Vk8yIX9gxnxd2YDzHF3TgIuV6FmVJOJp'
 
 def schedule_vacation(access_token, location):
     '''Mike and Nathan look at _schedule_vacation instead!'''
