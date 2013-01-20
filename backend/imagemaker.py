@@ -29,8 +29,10 @@ class Maker:
         self.username, self.api_key = random.choice([
             ('hrex', 'IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm'),
             ('nejstastnejsistene', 'A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj'),
-            ('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')])
+            ('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')
+            ('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')])
         self.ff = flashfoto.FlashFoto(self.username, self.api_key)
+
 
         self.fgID = self.ff.add(params = {
             "location": base64.urlsafe_b64encode(fgroundURL),
@@ -53,7 +55,7 @@ class Maker:
             })['ImageVersion']['image_id']
         #print "background added, with id " + bgID
         bgInfo = self.ff.info(bgID)
-    #print bgInfo
+        print bgInfo
         bgHeight = bgInfo['ImageVersion'][0]['height']
         bgWidth = bgInfo['ImageVersion'][0]['width']
         mergeX = int(bgWidth) / 3
