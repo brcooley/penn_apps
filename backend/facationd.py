@@ -29,7 +29,7 @@ import pymongo
 
 
 pidfile_path = '/var/run/pennapps.pid'
-update_interval = 60
+update_interval = 5
 num_processes = 4
 
 
@@ -64,21 +64,8 @@ def execute_job(_id, job):
     if action == 'put_wall_post':
         graph.put_wall_post(*args, **kwargs)
     elif action == 'put_photo':
-        # Retrieve the album_id and location for this vacation.
-        result = db.vacations.find_one(
-            { 'access_token': access_token },
-            { 'location': 1, 'album_id': 1, '_id': 0 })
-        location, album_id = result['location'], result['album_id']
-        # Create the facebook album if it doesn't exists.
-        if result['album_id'] is None:
-            album_id = create_album(graph, 'Awesome %s Photos!' % \
-                    location.title())
-            db.vacations.update(
-                { 'access_token': access_token },
-                { 'album_id': album_id })
         imgdata = requests.get(args[0])
-        graph.put_photo(io.BytesIO(imgdata.content), args[1],
-                album_id=str(album_id))
+        graph.put_photo(io.BytesIO(imgdata.content), args[1])
     else:
         print 'action:', action
     # Remove the job
@@ -99,7 +86,7 @@ def main():
     try:
         #pool = multiprocessing.Pool(processes=num_processes)
         while True:
-            debug('reading and executing jobs asynchronously')
+            debug('reading and executing jobs')
             #debug('jobs: %s' % jobs)
             #pool.apply_async(execute_job, jobs)
             for job in read_jobs():

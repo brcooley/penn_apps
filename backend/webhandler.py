@@ -58,47 +58,45 @@ class vacation_info:
             hotel = None
         book = bookchooser.select_book()
 
-        blebleble = {
+        payload = {
             'location': [city, location['name']],
             'photos': location['photos'],
             'flights': flights,
             'hotels': hotel,
             'books': book,
             'length': length,
+            'album_id': None,
             }
 
         conn = pymongo.MongoClient('localhost', 27017)
         try:
             db = conn.facation
-            asdf = blebleble.copy()
-            asdf.update({'access_token':access_token})
-            db.vacations.insert(asdf)
+            new_payload = payload.copy()
+            new_payload['access_token'] = access_token
+            db.vacations.insert(new_payload)
+            #print 'inserted', new_payload
         finally:
             conn.close()
 
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')
         web.header('Content-Type', 'application/json')
-        return json.dumps(blebleble)
+        return json.dumps(payload)
 
 class start:
     def POST(self):
         # expect access_token and fb_picture
         access_token = web.input()['access_token']
         fg_picture = web.input()['fg_picture']
+#        speed = web.input()['speed']
+        speed = True
 
         def generate_vacation():
             # Add this vacation to the db.
             conn = pymongo.MongoClient('localhost', 27017)
             try:
                 db = conn.facation
-                new_token = extend_token(access_token)
-                db.vacations.update({
-                    'access_token': access_token, 
-                    }, {
-                    #'access_token': new_token,
-                    '$set': { 'album_id': None, }
-                    })
+                #new_token = extend_token(access_token)
                 data = db.vacations.find_one({
                     'access_token': access_token,
                     })
@@ -106,7 +104,7 @@ class start:
                     'name': data['location'][1],
                     })['photos']
                 if True:
-                    photos = random.sample(photos, min(2, len(photos)))
+                    photos = random.sample(photos, min(6, len(photos)))
                     composites = photos[:len(photos)/2]
                     plain = photos[len(photos)/2:]
                     if composites:
@@ -116,7 +114,8 @@ class start:
                         'composite': composites,
                         'plain': plain,
                         }
-                    #print data['photos']
+                    data['speed'] = bool(speed)
+                    print data['photos']
             finally:
                 conn.close()
 
