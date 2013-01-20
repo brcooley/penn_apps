@@ -140,6 +140,9 @@ button {
   display: none;
   width: 940px; }
 
+.hide {
+  display: none; }
+
 .ui-img {
   position: relative;
   float: left; }
