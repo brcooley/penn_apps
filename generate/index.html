@@ -123,6 +123,7 @@
 				$('.delay').fadeOut(500);
 				$('.error').fadeOut(500);
 				$('.spinner').fadeIn(500, function() {
+					console.log('Starting spinner');
 					spinner.spin();
 				});
 				request_itinerary();
