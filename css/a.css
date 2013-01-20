@@ -167,9 +167,9 @@ button {
 #img-btn {
   color: #222222;
   background: #ccc;
-  border: 1px solid #b3b3b3; }
+  border: 1px solid #e6e6e6; }
   #img-btn:hover {
-    background: #b3b3b3;
+    background: #e6e6e6;
     border-color: #ccc; }
 
 #loading {
