@@ -55,7 +55,7 @@ class Maker:
             })['ImageVersion']['image_id']
         #print "background added, with id " + bgID
         bgInfo = self.ff.info(bgID)
-        print bgInfo
+        #print bgInfo
         bgHeight = bgInfo['ImageVersion'][0]['height']
         bgWidth = bgInfo['ImageVersion'][0]['width']
         mergeX = int(bgWidth) / 3
@@ -65,7 +65,7 @@ class Maker:
             "version": "MugshotMasked",
             "x": mergeX,
             "y": bgHeight ,
-            "scale":"75" ,
+            "scale":"66" ,
             "angle":"0",
             "flip": 0
             }]
