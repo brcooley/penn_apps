@@ -10,6 +10,8 @@ import time
 from datetime import datetime, timedelta
 
 import pymongo
+import pprint
+import random
 
 api_key = 'AAAF6JigAbmUBAL7kOw8h1ujvcuGIQvX8BWFng4NkyXyWGZBDrWMKHqHSGP8ccqgAZBjWVRXlSDQdeCh2iaoaP521ygZBHIuDlzIvTGrZAhXVyil521QC'
 
@@ -37,9 +39,20 @@ def _schedule_vacation(db, access_token, location):
     timestamp = datetime.now() + timedelta(days=3, hours=7)
     schedule_job(db, access_token, timestamp, 'put_photo', url, 'Caption!')
     '''
-    timestamp = datetime(2013, 1, 19, 15)
-    schedule_job(db, access_token, timestamp, 'put_wall_post', "Hello, world!")
 
+    timestamp = datetime(2013, 1, 19, 15)
+    #schedule_job(db, access_token, timestamp, 'put_wall_post', "Hello, world!")
+
+    #timestamp = datetime.now() # + timedelta(days=3, hours=7)
+    #url = 'http://farm5.staticflickr.com/4108/5055725881_d3f62c280d_b.jpg'
+    dest = 'Seattle'
+    db_out = list(db.locations.find({'name': dest}))
+
+    pic_list = db_out[0][u'photos']
+    url = random.choice(pic_list)
+    print url
+    schedule_job(db, access_token, timestamp, 'put_photo', url, \
+	'Look at me, here in ' + dest + '!')
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
     db.jobs.insert({
@@ -48,5 +61,6 @@ def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
         })
 
 if __name__ == '__main__':
-  schedule_vacation(api_key, 'Chicago')
+  #schedule_vacation(api_key, 'Chicago')
+  schedule_vacation(api_key, 'Seattle')
 
