@@ -16,7 +16,7 @@ def schedule_vacation(access_token, location):
     '''Mike and Nathan look at _schedule_vacation instead!'''
     conn = pymongo.MongoClient('localhost', 27017)
     try:
-        _schedule_vacation(db.facation, access_token, location)
+        _schedule_vacation(conn.facation, access_token, location)
     finally:
         conn.close()
 
