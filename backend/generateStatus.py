@@ -12,8 +12,8 @@ sourceCity = "sourceCity"
 hotelName = "hotelName"
 
 
-def generateFristStatus(destCity):
-    i = random.randInt(1,3)
+def generateFirstStatus(destCity):
+    i = random.randint(1,3)
     if i==1:
         return "So excited to be on my way to " + destCity + "!"
     elif i==2:
@@ -22,7 +22,7 @@ def generateFristStatus(destCity):
         return "Finally made it to the hotel in "+ destCity +"!"
 
 def generateMiddleStatus(destCity):
-    i = random.randInt(1,3)
+    i = random.randint(1,3)
     if i==1:
         return "Ready for another exciting day in "+ destCity
     elif i==2:
