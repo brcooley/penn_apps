@@ -43,7 +43,7 @@ def _schedule_vacation(db, access_token, data):
     timestamp = datetime.now() + timedelta(days=3, hours=7)
     schedule_job(db, access_token, timestamp, 'put_photo', url, 'Caption!')
     '''
-    pass
+
     #url = 'http://farm5.staticflickr.com/4108/5055725881_d3f62c280d_b.jpg'
 
     #timestamp = datetime(2013, 1, 19, 21, 40)
@@ -62,15 +62,17 @@ def _schedule_vacation(db, access_token, data):
     stat2 = generateMiddleStatus(dest)
     stat3 = generateEndStatus(dest)
     #fire them all off at once
-    timestamp = datetime(2013, 1, 19, 21, 40)
-    schedule_job(db, access_token, timestamp, 'put_wall_post', stat1)
-    schedule_job(db, access_token, timestamp, 'put_wall_post', stat2)
+    timestamp1 = datetime(2013, 1, 20, 0, 0)
+    timestamp2 = datetime(2013, 1, 25, 0, 0)
+    timestamp3 = datetime(2013, 1, 29, 0, 0)
+    schedule_job(db, access_token, timestamp1, 'put_wall_post', stat1)
+    schedule_job(db, access_token, timestamp2, 'put_wall_post', stat2)
     #empty pics
     for image in data['photos']['plain']:
-        schedule_job(db, access_token, timestamp, 'put_photo', image, '')
+        schedule_job(db, access_token, timestamp2, 'put_photo', image, '')
     for image in data['photos']['composite']:
-        schedule_job(db, access_token, timestamp, 'put_photo', image, generateImageTag(dest))
-    schedule_job(db, access_token, timestamp, 'put_wall_post', stat3)
+        schedule_job(db, access_token, timestamp2, 'put_photo', image, generateImageTag(dest))
+    schedule_job(db, access_token, timestamp3, 'put_wall_post', stat3)
     
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
