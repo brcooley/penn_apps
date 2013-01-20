@@ -12,6 +12,9 @@ import base64, time
     #should be a url
     #return
 
+#retrieved at 1:15am
+mikes_key = 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH'
+
 class Maker:
     ff = flashfoto.FlashFoto('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')#not sure if i need to add a baseurl
     fgID = None
