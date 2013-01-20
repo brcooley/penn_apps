@@ -166,6 +166,20 @@ button {
   background: rgba(34, 34, 34, 0.6);
   border-radius: 10px; }
 
+#mid-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto auto;
+  padding: 10px;
+  width: 960px;
+  height: 180px;
+  font-size: 1.4em;
+  background: rgba(34, 34, 34, 0.6);
+  border-radius: 10px; }
+
 #img-btn {
   color: #222222;
   background: #ccc;
