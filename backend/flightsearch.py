@@ -20,6 +20,7 @@ import datetime
 import dateutil.parser
 import pprint
 import requests
+import random
 
 OUTGOING = 0
 RETURN = 1
@@ -69,3 +70,10 @@ def getFlights(route):
     #print '\n'
     return routings
 
+def main():
+    itin = select_flight('chicago', 'prague', datetime.datetime.now(), \
+      datetime.datetime.now() + datetime.timedelta(days=random.randrange(3,15)))
+    pprint.pprint(itin)
+
+if __name__ == '__main__':
+    main()

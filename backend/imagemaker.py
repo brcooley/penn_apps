@@ -45,6 +45,7 @@ def batchImages(fgroundURL , backgroundList):
     pictureList = []
     for url in backgroundList:
         pictureList.append(photo.makePicture(url))
+    return pictureList
 
     
 #print makePicture( "http://imgur.com/fYUug5Q.jpg" , "http://farm9.staticflickr.com/8334/8391368003_b4880e7de5_h.jpg")
