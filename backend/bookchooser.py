@@ -21,7 +21,7 @@ def select_book():
     # hardcoded ------>  book_list[WHICH ENTRY][u 'book_details'][0][u'title']
 
     #select the entry
-    WHICH_ENTRY = random.randint(0,len(book_list)-1)
+    WHICH_ENTRY = random.randint(0,len(book_list))
     title = book_list[WHICH_ENTRY][u'book_details'][0][u'title']
 
     WHICH_IMG = 0
