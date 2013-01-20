@@ -25,8 +25,15 @@ def select_hotel( dest, whichHotel=0):
     #need to limit what info is being passed up
     hotelSummary = hotelInfo.json() \
         ['HotelListResponse']['HotelList']['HotelSummary'][whichHotel]
-    hotelSummary['pic'] = getHotelImages(hotelSummary['hotelId'])[0] 
-    return hotelSummary
+    hotelSummary['pic'] = getHotelImages(hotelSummary['hotelId']) 
+    if hotelSummary['pic'] != None:
+        hotelSummary['pic'] = hotelSummary['pic'][0]
+        return hotelSummary
+    elif whichHotel == 4:
+        return hotelSummary
+    else:
+        whichHotel += 1
+        return select_hotel(dest, whichHotel)
 
 
 def getHotelImages( hotelID ):
@@ -38,11 +45,13 @@ def getHotelImages( hotelID ):
         }
     hotelInfo = requests.get(url, params=payload)
     junk = hotelInfo.json()
+    if junk['HotelRoomImageResponse'].keys()[0] != 'RoomImages':
+        return None
     return [i.values()[0] for i in \
         junk['HotelRoomImageResponse']['RoomImages']['RoomImage']]
-    return urlList
+    #return urlList
 
 
-#someHotel = pickHotel('Boston')
+#pprint.pprint( select_hotel('Chicago') )
 #print someHotel
 #print getHotelImages(someHotel['hotelId'])
