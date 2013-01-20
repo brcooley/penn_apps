@@ -29,7 +29,7 @@ class Maker:
         self.username, self.api_key = random.choice([
             ('hrex', 'IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm'),
             ('nejstastnejsistene', 'A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj'),
-            ('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')
+            ('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH'),
             ('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')])
         self.ff = flashfoto.FlashFoto(self.username, self.api_key)
 
