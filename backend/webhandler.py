@@ -57,7 +57,7 @@ class vacation_info:
             print e
 
         hotel = {
-            'name': 'An exclusive 5-star resort',
+            'name': 'most exclusive 5-star resort',
             'pic': 'http://images.theage.com.au/2010/04/26/1382672/Hotel_Generic-420x0.jpg'
             }
 
