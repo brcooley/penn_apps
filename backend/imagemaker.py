@@ -17,18 +17,18 @@ class Maker:
     fgID = None
     def __init__(self, fgroundURL):
         self.fgID = self.ff.add(params = {"location":base64.urlsafe_b64encode(fgroundURL), 'privacy':'public'})['ImageVersion']['image_id']
-        print "foreground id? " , self.fgID
+        #print "foreground id? " , self.fgID
         self.ff.mugshot(self.fgID)
         while self.ff.mugshot_status(self.fgID)['mugshot_status'] == 'pending' :
             time.sleep(10)
-        print "\n STATUS " , self.ff.mugshot_status(self.fgID)
+        #print "\n STATUS " , self.ff.mugshot_status(self.fgID)
         if self.ff.mugshot_status(self.fgID) == 'failed':
             assert False
 
 
     def makePicture( self, bgroundURL ):
         bgID = self.ff.add(params = {"location":base64.urlsafe_b64encode(bgroundURL), 'privacy':'public'})['ImageVersion']['image_id']
-        print "background added, with id " + bgID
+        #print "background added, with id " + bgID
         bgInfo = self.ff.info(bgID)
     #print bgInfo
         bgHeight = bgInfo['ImageVersion'][0]['height']
