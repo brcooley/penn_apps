@@ -52,8 +52,10 @@
 				$('.return-date').html(data.flights[0]['return'][data.flights[0]['return'].length-1]['arrive']);
 			}
 
-			$('.hover').each(function() {
-				return $('.main').css('height', $('#anchor').css('height'));
+			$('#anchor').load(function() {
+				$('.hover').each(function() {
+					return $('.main').css('height', $('.container').css('height'));
+				});
 			});
 		}
 
@@ -208,9 +210,9 @@
 				<button class="retry">I'm sorry, please let me go on a facation!</button>
 			</div>
 		</section>
-		<footer>
+<!-- 		<footer>
 			Using the Facebook API, Masherly (Expedia), Azure, Filepicker.io, MongoDB and more!
-		</footer>
+		</footer> -->
 	</div>
 </body>
 </html>

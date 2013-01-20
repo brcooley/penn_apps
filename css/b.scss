@@ -68,7 +68,10 @@ footer {
 // CLASS //
 .error {
 	display: none;
-	width: 940px;
+	// width: 940px;
+	button {
+		margin: 20px 10px;
+	}
 }
 .retry {
 	width: 43%;

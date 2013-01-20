@@ -66,7 +66,7 @@ class vacation_info:
         except Exception as e:
             print e
             book = {
-                'title': 'a good book',
+                'title': 'A good book',
                 'photo': 'http://www.papierplume.com/media/catalog/product/cache/1/image/5e06319eda06f020e43594a9c230972d/m/o/modern-hard-bound-leather_2.jpg',
                 }
 
