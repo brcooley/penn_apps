@@ -23,24 +23,23 @@ webpage with what is going to happen
 * mongo db to store logins and vacations (for time delay)
 * allow cancel vacations
 
+API
+===
+* masherly (expedia)
+* hipmunk
+* google search
+* nytimes
+* facebook
+* flashfoto
+* mongoDB, pyMongo
+* azure (hosting)
+* filepicker.io (picture cropping)
+* flickr
+* twilio? (send fake texts; notify users about updates to their vacations)
 
 
----------------API--------------------
-masherly (expedia)
-hipmunk
-google search
-nytimes
-facebook
-flashfoto
-mongoDB, pyMongo
-azure (hosting)
-filepicker.io (picture cropping)
-flickr
-twilio? (send fake texts; notify users about updates to their vacations)
-
-
-=======
-Desired features for mongoDB to interface with on Facebook:
+Planned Features
+================
 * status updates
 * wall posts
 * like our own pictures
@@ -50,14 +49,3 @@ Desired features for mongoDB to interface with on Facebook:
 
 * list of jobs, associated with timestamps for execution, with arguments (oauth tokens to jobs)
 * allow cancel vacations
-
-
-API
-===
-* masherly (hotwire)
-* facebook
-* mongoDB
-* azure? (hosting)
-* filepicker.io? tumblr? (get social pictues)
-* twilio? (send fake texts; notify users about updates to their vacations)
-* nytimes (what book are you reading?)
