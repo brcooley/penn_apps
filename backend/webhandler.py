@@ -88,8 +88,8 @@ class start:
         # expect access_token and fb_picture
         access_token = web.input()['access_token']
         fg_picture = web.input()['fg_picture']
-#        speed = web.input()['speed']
-        speed = True
+        speed = web.input()['speed']
+        #speed = True
 
         def generate_vacation():
             # Add this vacation to the db.
@@ -108,18 +108,21 @@ class start:
                     composites = photos[:len(photos)/2]
                     plain = photos[len(photos)/2:]
                     if composites:
-                        composites = imagemaker.batchImages(
-                                fg_picture, composites)
+                        try:
+                            composites = imagemaker.batchImages(
+                                    fg_picture, composites)
+                        except Exception as e:
+                            print e
                     data['photos'] = {
                         'composite': composites,
                         'plain': plain,
                         }
                     data['speed'] = bool(speed)
-                    print data['photos']
+                    #print data['photos']
             finally:
                 conn.close()
 
-            # Schedule all the facebook stuff here!!!!!!!!!
+            # Schedule all the facebook stuff here.
             fbscheduler.schedule_vacation(access_token, data)
 
         threading.Thread(target=generate_vacation).start()

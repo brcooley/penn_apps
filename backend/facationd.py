@@ -33,9 +33,9 @@ update_interval = 5
 num_processes = 4
 
 
-debug = True
+_debug = False
 def debug(mesg):
-    if debug:
+    if _debug:
         print 'debug: ' + mesg
 
 
@@ -61,20 +61,29 @@ def execute_job(_id, job):
     global db
     access_token, action, args, kwargs = job
     graph = facebook.GraphAPI(access_token)
+    print action
     if action == 'put_wall_post':
         graph.put_wall_post(*args, **kwargs)
     elif action == 'put_photo':
+        result = db.vacations.find_one({
+            'access_token': access_token,
+            })
+        print result, result['album_id']
         imgdata = requests.get(args[0])
         graph.put_photo(io.BytesIO(imgdata.content), args[1])
+    #elif action == 'checkin':
+    #    data = graph.get_object('search?q=%s&type=place' % \
+    #            urllib.quote(args[0]))
+    #    print data
     else:
-        print 'action:', action
+        print 'unknown action:', repr(action)
     # Remove the job
     db.jobs.remove({ '_id': _id })
 
 
 def create_album(graph, name):
     '''Create album on facebook and return its id.'''
-    print repr(name)
+    #print repr(name)
     return graph.put_object('me', 'albums', name=name)['id']
 
 
@@ -91,7 +100,10 @@ def main():
             #pool.apply_async(execute_job, jobs)
             for job in read_jobs():
                 debug('executing job: %s' % job)
-                execute_job(job['_id'], job['jobs_args'])
+                try:
+                    execute_job(job['_id'], job['jobs_args'])
+                except facebook.GraphAPIError as e:
+                    print 'Error:', e
             debug('sleeping %d seconds' % update_interval)
             time.sleep(update_interval)
     finally:

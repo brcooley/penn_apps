@@ -44,7 +44,7 @@ class FlashFoto:
         response = conn.getresponse()
         data = response.read()
         
-        print "data: " + data
+        #print "data: " + data
 
         # There was an API error
         if response.status != 200:
