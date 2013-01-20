@@ -24,16 +24,12 @@ import random
 mikes_key = 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH'
 
 class Maker:
-    ff = None#flashfoto.FlashFoto('ncschaaf', 'DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g')#not sure if i need to add a baseurl
     fgID = None
     def __init__(self, fgroundURL):
-        i = randInt(1,3)
-        if i==1:
-            ff = flashfoto.FlashFoto('hrex', 'IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm')
-        elif i==2:
-            ff = flashfoto.FlashFoto('nejstastnejsistene', 'A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj')
-        else:
-            ff = flashfoto.FlashFoto('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')
+        self.ff = flashfoto.FlashFoto(*random.choice([
+            ('hrex', 'IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm'),
+            ('nejstastnejsistene', 'A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj'),
+            ('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')]))
 
 
         self.fgID = self.ff.add(params = {
@@ -45,7 +41,7 @@ class Maker:
         while self.ff.mugshot_status(self.fgID) \
                 ['mugshot_status'] == 'pending' :
             time.sleep(10)
-        #print "\n STATUS " , self.ff.mugshot_status(self.fgID)
+        print "\n STATUS " , self.ff.mugshot_status(self.fgID)
         if self.ff.mugshot_status(self.fgID) == 'failed':
             assert False
 

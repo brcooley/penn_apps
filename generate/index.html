@@ -130,13 +130,14 @@
 			$('.retry').click(function() {
 				// send another request to server
 				$('.delay').fadeOut(500);
-				if ($('.error').css('display') == 'none') {
+				if ($('.error').css('display') != 'none') {
 					$('.error').fadeOut(500);
 				}
-				$('.spinner').fadeIn(500, function() {
-					console.log('Starting spinner');
-					spinner.spin();
-				});
+				spinner.spin();
+				// $('.spinner').fadeIn(500, function() {
+				// 	console.log('Starting spinner');
+				// 	spinner.spin();
+				// });
 				request_itinerary();
 			});
 		});
