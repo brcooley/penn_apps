@@ -49,7 +49,7 @@ def select_flight(from_, to, start_date, end_date):
     #-----------------------------------------------------#
 
 def getFlights(route):
-    routings = []
+    #routings = []
     flights = route['legs']
     trip = []
     for flight in flights:
@@ -66,9 +66,9 @@ def getFlights(route):
         leg = {'flight': num, 'origin': origin, 'dest': dest, \
             'takeoff': depart, 'arrive': arrive}
         trip.append(leg)
-    routings.append(trip)
+    #routings.append(trip)
     #print '\n'
-    return routings
+    return trip
 
 def main():
     itin = select_flight('chicago', 'prague', datetime.datetime.now(), \

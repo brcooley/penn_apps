@@ -48,25 +48,28 @@ class vacation_info:
         hotel = hotels.select_hotel(location['name'])
         book = bookchooser.select_book()
 
-        conn = pymongo.MongoClient('localhost', 27017)
-        try:
-            db = conn.facation
-            db.vacations.insert({
-                })
-        finally:
-            conn.close()
-
-        # Headers and json return dictionary.
-        web.header('Access-Control-Allow-Origin', '*')
-        web.header('Content-Type', 'application/json')
-        return json.dumps({
+        blebleble = {
             'location': location['name'],
             'photos': location['photos'][:10],
             'flights': flights,
             'hotels': hotel,
             'books': book,
             'length': length,
-            })
+            }
+
+        conn = pymongo.MongoClient('localhost', 27017)
+        try:
+            db = conn.facation
+            asdf = blebleble.copy()
+            asdf.update({'access_token':access_token})
+            db.vacations.insert(asdf)
+        finally:
+            conn.close()
+
+        # Headers and json return dictionary.
+        web.header('Access-Control-Allow-Origin', '*')
+        web.header('Content-Type', 'application/json')
+        return json.dumps(blebleble)
 
 class start:
     def POST(self):
@@ -77,18 +80,21 @@ class start:
         conn = pymongo.MongoClient('localhost', 27017)
         try:
             db = conn.facation
+            new_token = extend_token(access_token)
             db.vacations.update({
                 'access_token': access_token, 
                 }, {
-                'access_token': extend_token(access_token),
-                'location': location,
+                'access_token': new_token,
                 'album_id': None
+                })
+            data = db.vacations.find({
+                'access_token': new_token,
                 })
         finally:
             db.close()
 
         # Schedule all the facebook stuff here!!!!!!!!!
-        fbscheduler.schedule_vacation(access_token, location)
+        fbscheduler.schedule_vacation(access_token, data)
 
         # Headers and json return dictionary.
         web.header('Access-Control-Allow-Origin', '*')

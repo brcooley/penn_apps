@@ -29,7 +29,8 @@
 				$('.book').html(data.books['name']);
 			}
 			if (data.flights) {
-				$('.flight').html(data.flights['outgoing'][0][0]['num'])
+				console.log(data.flights[0]['outgoing']);
+				$('.flight').html(data.flights[0]['outgoing'][0]['flight'])
 			}
 		}
 
