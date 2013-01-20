@@ -72,7 +72,7 @@ class FlashFoto:
         #print image_data
         #print params
         url = self.__url_with_param_string('add', params)
-        print url
+        #print url
         if image_data:
             #print "i hope this isnt happening"
             return self.__make_request(url, 'POST', image_data)
