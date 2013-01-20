@@ -16,25 +16,34 @@ def main():
 # all dates MM/DD/YYYY
 def pickHotel( dest, whichHotel=0):
     url = 'http://api.ean.com/ean-services/rs/hotel/v3/list'
-    payload = {'apiKey':'j6xun3rbjn66vhzhvnm99twg', 'cid':'55505', 'destinationString':dest , 'minStarRating':'4.0'}
-    #print url
+    payload = {
+        'apiKey': 'j6xun3rbjn66vhzhvnm99twg',
+        'cid': '55505',
+        'destinationString': dest,
+        'minStarRating': '4.0'
+        }
     hotelInfo = requests.get(url, params=payload)
-    print hotelInfo.url
-    hotelSummary = hotelInfo.json()['HotelListResponse']['HotelList']['HotelSummary'][whichHotel] #need to limit what info is being passed up
+
+    #need to limit what info is being passed up
+    hotelSummary = hotelInfo.json() \
+        ['HotelListResponse']['HotelList']['HotelSummary'][whichHotel]
     return hotelSummary
-    #return hotelID
 
 
 def getHotelImages( hotelID ):
     url = 'http://api.ean.com/ean-services/rs/hotel/v3/roomImages'
-    payload = {'apiKey':'j6xun3rbjn66vhzhvnm99twg', 'cid':'55505', 'hotelId':hotelID}
+    payload = {
+        'apiKey': 'j6xun3rbjn66vhzhvnm99twg',
+        'cid': '55505',
+        'hotelId': hotelID
+        }
     hotelInfo = requests.get(url, params=payload)
-    print hotelInfo.url
     junk = hotelInfo.json()
-    urlList = [i.values()[0] for i in junk['HotelRoomImageResponse']['RoomImages']['RoomImage']]
+    return [i.values()[0] for i in \
+        junk['HotelRoomImageResponse']['RoomImages']['RoomImage']]
     return urlList
 
 
-someHotel = pickHotel('Boston')
+#someHotel = pickHotel('Boston')
 #print someHotel
-print getHotelImages(someHotel['hotelId'])
+#print getHotelImages(someHotel['hotelId'])
