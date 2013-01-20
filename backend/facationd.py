@@ -14,12 +14,13 @@
 # install it from here: http://pypi.python.org/pypi/python-daemon/
 
 import ConfigParser
-import StringIO
+import io
 import multiprocessing.dummy as multiprocessing # Use threads.
 import os
 import sys
 import time
 import urllib
+import urllib2
 
 import daemon
 import facebook
@@ -61,7 +62,7 @@ def execute_job(_id, job):
     access_token, action, args, kwargs = job
     graph = facebook.GraphAPI(access_token)
     if action == 'put_wall_post':
-        func = graph.put_wall_post
+        graph.put_wall_post(*args, **kwargs)
     elif action == 'put_photo':
         # Retrieve the album_id and location for this vacation.
         result = db.vacations.find_one(
@@ -70,24 +71,23 @@ def execute_job(_id, job):
         location, album_id = result['location'], result['album_id']
         # Create the facebook album if it doesn't exists.
         if result['album_id'] is None:
-            album_id = create_album('Awesome %s Photos!' % \
+            album_id = create_album(graph, 'Awesome %s Photos!' % \
                     location.title())
             db.vacations.update(
                 { 'access_token': access_token },
                 { 'album_id': album_id })
-        kwargs['album_id'] = album_id
-        args[0] = StringIO.StringIO(requests.get(args[0]).text)
-        func = graph.put_photo
+        imgdata = requests.get(args[0])
+        graph.put_photo(io.BytesIO(imgdata.content), args[1],
+                album_id=str(album_id))
     else:
         print 'action:', action
-    # Apply the action and get the facebook id.
-    func(*args, **kwargs)
     # Remove the job
     db.jobs.remove({ '_id': _id })
 
 
 def create_album(graph, name):
     '''Create album on facebook and return its id.'''
+    print repr(name)
     return graph.put_object('me', 'albums', name=name)['id']
 
 
