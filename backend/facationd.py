@@ -61,7 +61,7 @@ def execute_job(_id, job):
     global db
     access_token, action, args, kwargs = job
     graph = facebook.GraphAPI(access_token)
-    #print action
+    print action
     if action == 'put_wall_post':
         graph.put_wall_post(*args, **kwargs)
     elif action == 'put_photo':
