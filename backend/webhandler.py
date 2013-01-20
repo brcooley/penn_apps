@@ -21,6 +21,7 @@ import bookchooser
 import fbscheduler
 import flightsearch
 import hotels
+import imagemaker
 
 urls = (
     '/vacationinfo', 'vacation_info',
@@ -50,7 +51,7 @@ class vacation_info:
 
         blebleble = {
             'location': [city, location['name']],
-            'photos': location['photos'][:10],
+            'photos': location['photos'],
             'flights': flights,
             'hotels': hotel,
             'books': book,
@@ -75,6 +76,7 @@ class start:
     def POST(self):
         # expect access_token and fb_picture
         access_token = web.input()['access_token']
+        fg_picture = web.input()['fg_picture']
 
         # Add this vacation to the db.
         conn = pymongo.MongoClient('localhost', 27017)
@@ -90,6 +92,19 @@ class start:
             data = db.vacations.find_one({
                 'access_token': access_token,
                 })
+
+            photos = db.locations.find_one({
+                'name': data['location'][1],
+                })['photos']
+            photos = random.sample(photos, 5)
+            composites = photos[:3]
+            plain = photos[3:]
+            images = imagemaker.batchImages(fg_picture, composites)
+            data['photos'] = {
+                'composite': images,
+                'plain': plain,
+                }
+            print data
         finally:
             conn.close()
 
