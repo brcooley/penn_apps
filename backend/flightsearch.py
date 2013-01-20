@@ -71,8 +71,9 @@ def getFlights(route):
     return routings
 
 def main():
-  itin = select_flight('chicago', 'prague', datetime.datetime.now(), \
+    itin = select_flight('chicago', 'prague', datetime.datetime.now(), \
       datetime.datetime.now() + datetime.timedelta(days=random.randrange(3,15)))
-  pprint.pprint(itin)
+    pprint.pprint(itin)
 
-main()
+if __name__ == '__main__':
+    main()

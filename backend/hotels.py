@@ -9,12 +9,10 @@ import requests
 import urllib
 import pprint
 
-def main():
-  pickHotel("Boston", '01/27/2013', '01/29/2013')
-
-# dest is a string which contains a city name. It can also have country, state, etc.
-# all dates MM/DD/YYYY
-def pickHotel( dest, whichHotel=0):
+# dest is a string which contains a city name.
+# It can also have country, state, etc.
+# all dates MM/DD/YYYY -- where do the dates go???
+def pick_hotel( dest, whichHotel=0):
     url = 'http://api.ean.com/ean-services/rs/hotel/v3/list'
     payload = {
         'apiKey': 'j6xun3rbjn66vhzhvnm99twg',
