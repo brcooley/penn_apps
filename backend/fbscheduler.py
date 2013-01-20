@@ -7,24 +7,24 @@
 #
 
 import time
+import random
 from datetime import datetime, timedelta
 
 import pymongo
 import pprint
 import random
 
-api_key = 'AAAF6JigAbmUBAL7kOw8h1ujvcuGIQvX8BWFng4NkyXyWGZBDrWMKHqHSGP8ccqgAZBjWVRXlSDQdeCh2iaoaP521ygZBHIuDlzIvTGrZAhXVyil521QC'
 
-def schedule_vacation(access_token, location):
+def schedule_vacation(access_token, data):
     '''Mike and Nathan look at _schedule_vacation instead!'''
     conn = pymongo.MongoClient('localhost', 27017)
     try:
-        _schedule_vacation(conn.facation, access_token, location)
+        _schedule_vacation(conn.facation, access_token, data)
     finally:
         conn.close()
 
 
-def _schedule_vacation(db, access_token, location):
+def _schedule_vacation(db, access_token, data):
     '''
     Schedule jobs to be executed by the Facebook API.
 
@@ -40,11 +40,16 @@ def _schedule_vacation(db, access_token, location):
     schedule_job(db, access_token, timestamp, 'put_photo', url, 'Caption!')
     '''
 
-    timestamp = datetime(2013, 1, 19, 15)
+    #timestamp = datetime(2013, 1, 19, 15)
     #schedule_job(db, access_token, timestamp, 'put_wall_post', "Hello, world!")
 
     #timestamp = datetime.now() # + timedelta(days=3, hours=7)
     #url = 'http://farm5.staticflickr.com/4108/5055725881_d3f62c280d_b.jpg'
+
+    timestamp = datetime(2013, 1, 19, 21, 40)
+    schedule_job(db, access_token, timestamp, 'put_wall_post', \
+            "Hello, %s %s!"%(data['location'], random.random()))
+
     dest = 'Seattle'
     db_out = list(db.locations.find({'name': dest}))
 
@@ -56,7 +61,7 @@ def _schedule_vacation(db, access_token, location):
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
     db.jobs.insert({
-        'timestamp': time.mktime(timestamp.timetuple()),
+        'timestamp': time.mktime(timestamp.utctimetuple()),
         'jobs_args': [access_token, token, args, kwargs],
         })
 
