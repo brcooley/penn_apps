@@ -6,6 +6,9 @@ import base64, time
 # api:      A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj
 # username: nejstastnejsistene
 
+# api:		IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm
+# username: hrex
+
 #def getBackground():
     #get stuff from mike's flickr scraper
     #should be a url
