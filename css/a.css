@@ -164,10 +164,13 @@ button {
   background: rgba(34, 34, 34, 0.6);
   border-radius: 10px; }
 
-#photo-btn {
+#img-btn {
   color: #222222;
   background: #ccc;
   border: 1px solid #b3b3b3; }
+  #img-btn:hover {
+    background: #b3b3b3;
+    border-color: #ccc; }
 
 #loading {
   height: 200px; }
