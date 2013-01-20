@@ -62,9 +62,11 @@ def _schedule_vacation(db, access_token, data):
     stat2 = generateMiddleStatus(dest)
     stat3 = generateEndStatus(dest)
     #fire them all off at once
-    timestamp1 = datetime(2013, 1, 20, 0, 0)
-    timestamp2 = datetime(2013, 1, 25, 0, 0)
-    timestamp3 = datetime(2013, 1, 29, 0, 0)
+    timestamp1 = timestamp2 = timestamp3 = datetime(2013, 1, 20, 0, 0)
+    if data['speed'] == False:
+        timestamp1 = datetime(2013, 1, 20, 0, 0)
+        timestamp2 = datetime(2013, 1, 25, 0, 0)
+        timestamp3 = datetime(2013, 1, 29, 0, 0)
     schedule_job(db, access_token, timestamp1, 'put_wall_post', stat1)
     schedule_job(db, access_token, timestamp2, 'put_wall_post', stat2)
     #empty pics
