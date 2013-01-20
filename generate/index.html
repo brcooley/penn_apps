@@ -26,10 +26,11 @@
 				$('.hotel').html(data.hotels['name']);
 			}
 			if (data.books) {
-				$('.book').html(data.books['name']);
+				$('.book').html(data.books['title']);
+				$('.book-img').html('<img src=' + data.books['photo'] + ' />');
 			}
 			if (data.flights) {
-				console.log(data.flights[0]['outgoing']);
+				// console.log(data.flights[0]['outgoing']);
 				$('.flight').html(data.flights[0]['outgoing'][0]['flight'])
 			}
 		}
@@ -136,7 +137,7 @@
 			<div class="delay">
 				<section id="trip-info">
 					<p>For your amazing Facation, you will be flying to fabulous <span class="location"></span>! for a <span class="trip-length"></span>-day facation!</p> <div class="loc-img"></div>
-					<p>You will be staying in the glamorous <span class="hotel"></span>, sipping on a <span class='drink'></span> and reading your new favorite book, <span clas="book"></span> 
+					<p>You will be staying in the glamorous <span class="hotel"></span>, sipping on a <span class='drink'></span> and reading your new favorite book, <span clas="book"></span></p> <div class="book-img"></div>
 				</section>
 				<button id="book-btn">Book my Facation!</button><button class="retry" id="retry-btn">Not awesome enough, give me another</button>
 			</div>
