@@ -13,7 +13,7 @@ hotelName = "hotelName"
 
 
 def generateFirstStatus(destCity):
-    i = random.randint(1,10)
+    i = random.randint(1,12)
     if i==1:
         return "So excited to be on my way to " + destCity + "!"
     elif i==2:
@@ -32,11 +32,15 @@ def generateFirstStatus(destCity):
         return "Can anyone give me a ride to the airport? I need to catch a plane to "+destCity
     elif i==9:
         return destCity+"!!!!"
+    elif i==10:
+        return "Finally in "+destCity+" and ready to explore (:"
+    elif i==11:
+        return "It's time to start the show - "+destCity+"!"
     else:
         return "Finally made it to the hotel in "+ destCity +"!"
 
 def generateMiddleStatus(destCity):
-    i = random.randint(1,10)
+    i = random.randint(1,11)
     if i==1:
         return "Ready for another exciting day in "+ destCity
     elif i==2:
@@ -55,20 +59,42 @@ def generateMiddleStatus(destCity):
         return "If you havent been to "+destCity+" you havent lived"
     elif i==9:
         return "Vacation is great"
+    elif i==10:
+        return "Still in "+destCity+", still in heaven!"
     else:
         return "I dont think I will ever leave "+destCity
 
 def generateEndStatus(destCity):
-        return "Its been a good trip, but I am glad to be home."
+    i = random.randint(1, 5)
+    if i==1:
+      return "Trip of a lifetime, and now it's over :("
+    elif i==2:
+      return "Its been a good trip, but I am glad to be home."
+    elif i==3:
+      return "Feels good to be back."
+    elif i==4:
+      return "Just got back and already planning a return trip!"
+    else:
+      return "Home sweet home."
 
 
 def generateImageTag(destCity):
-    i = random.randint(1,4)
+    i = random.randint(1,9)
     if i == 1:
         return "Having a great time in " +destCity+"!"
     elif i == 2:
         return "I cant believe I'm here!!!"
     elif i == 3:
         return "This one looks a little shopped..."
+    elif i == 4:
+        return "Guess where I am!"
+    elif i == 5:
+        return "Oh, the places you'll go!"
+    elif i == 6:
+        return "Hi, mom!"
+    elif i == 7:
+        return "Look at this!!! THIS is " +destCity+"!"
+    elif i == 8:
+        return "Try planking on THAT."
     else:
         return "I wonder how long I can hold this pose?"
