@@ -1,7 +1,17 @@
+#!/usr/bin/env python
+#fbscheduler.py
+# @author Mike
+#
+# schedules automated fb activity for delayed execution
+#
+
 import time
+import facationd
 from datetime import *
 
 import pymongo
+
+api_key = extend_token('AAAF6JigAbmUBAAn6ZBtztxwxfgVgHSpVAHEgpqmvZBFgMLet0VEyZAEHnKY4u89o3CaWtZAKcrvIxynmUvr3Vk8yIX9gxnxd2YDzHF3TgIuV6FmVJOJp')
 
 def schedule_vacation(access_token, location):
     '''Mike and Nathan look at _schedule_vacation instead!'''
@@ -12,11 +22,12 @@ def schedule_vacation(access_token, location):
         conn.close()
 
 
-def schedule_vacation(db, access_token, location):
+def _schedule_vacation(db, access_token, location):
     '''
     Schedule jobs to be executed by the Facebook API.
 
-    Examples: (see https://github.com/pythonforfacebook/facebook-sdk/blob/master/facebook.py for functions and arguments and/or ask Peter for help! :D)
+    Examples: (see https://github.com/pythonforfacebook/facebook-sdk/blob/master/facebook.py 
+    for functions and arguments and/or ask Peter for help! :D)
 
     # Post a status at 7pm on Jan 23
     timestamp = datetime(2013, 1, 23, 19)
@@ -26,7 +37,8 @@ def schedule_vacation(db, access_token, location):
     timestamp = datetime.now() + timedelta(days=3, hours=7)
     schedule_job(db, access_token, timestamp, 'put_photo', url, 'Caption!')
     '''
-    pass
+    timestamp = datetime(2013, 1, 19, 15)
+    schedule_job(db, access_token, timestamp, "Hello, world!")
 
 
 def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
@@ -34,4 +46,7 @@ def schedule_job(db, access_token, timestamp, token, *args, **kwargs):
         'timestamp': time.mktime(timestamp.timetuple()),
         'jobs_args': [access_token, token, args, kwargs],
         })
+
+if __name__ == '__main__':
+  schedule_vacation(api_key, 'Chicago')
 
