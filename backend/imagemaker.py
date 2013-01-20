@@ -26,11 +26,11 @@ mikes_key = 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH'
 class Maker:
     fgID = None
     def __init__(self, fgroundURL):
-        self.ff = flashfoto.FlashFoto(*random.choice([
+        self.username, self.api_key = random.choice([
             ('hrex', 'IRAY8h1P1jyG7rKSuNc5rLMncWTvPJNm'),
             ('nejstastnejsistene', 'A4jqruA3HggxWDxXQsIfnO9qoSnrkdZj'),
-            ('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')]))
-
+            ('Mike', 'K6kNLOkY3TFkpHCw1HdIauVM9F5j83IH')])
+        self.ff = flashfoto.FlashFoto(self.username, self.api_key)
 
         self.fgID = self.ff.add(params = {
             "location": base64.urlsafe_b64encode(fgroundURL),
@@ -70,7 +70,8 @@ class Maker:
         mergedID = self.ff.merge(mergedata, params = {
             'privacy': 'public' } )['ImageVersion']['image_id']
         return "http://flashfotoapi.com/api/get/" + mergedID + \
-            "?partner_username=ncschaaf&partner_apikey=DyRkKMSiYncpTaG2i7IuJy9FGA3bll5g"
+            "?partner_username=%s&partner_apikey=%s" % \
+            (self.username, self.api_key)
 
     
 def batchImages(fgroundURL , backgroundList):
